@@ -1,14 +1,12 @@
 name: Feedback
 description: Your feedback is highly appreciated and will help us to improve our ability to serve you and other users of our application.
-title: "[Feedback]: "
-labels: ["feedback"]
 assignees:
   - octocat
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to provide the feedback!
   - type: input
     id: contact
     attributes:
