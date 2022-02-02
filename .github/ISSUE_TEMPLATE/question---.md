@@ -1,6 +1,6 @@
 ---
 name: "Question \U0001F914"
-about: Usage question or discussion about Developer sandbox
+about: Usage question or discussion about IBM Developer Technology Sandbox
 title: ''
 labels: ''
 assignees: ''
