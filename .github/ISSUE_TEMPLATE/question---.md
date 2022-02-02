@@ -1,6 +1,6 @@
 ---
 name: "Question \U0001F914"
-about: Usage question or discussion about Developer Playground
+about: Usage question or discussion about Developer sandbox
 title: ''
 labels: ''
 assignees: ''
