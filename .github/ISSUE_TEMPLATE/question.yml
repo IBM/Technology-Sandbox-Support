@@ -1,10 +1,10 @@
-name: Feedback
-description: Your feedback is highly appreciated and will help us to improve our ability to serve you and other users of our application.
+name: Questions \U0001F914
+description: Usage question or discussion about IBM Developer Technology Sandbox. 
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to provide the feedback!. Please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
+        Please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!, Before opening a new issue please search existing [issues](https://github.com/IBM/Developer-Playground-Support/issues)!
   - type: input
     id: contact
     attributes:
@@ -22,9 +22,9 @@ body:
     validations:
       required: false
   - type: textarea
-    id: feedback-area
+    id: question-area
     attributes:
-      label: Provide the feedback here
-      description: A clear and concise description
+      label: Post your question here
+      description: To make it easier for us to help you, please include as much useful information as possible.
     validations:
       required: true

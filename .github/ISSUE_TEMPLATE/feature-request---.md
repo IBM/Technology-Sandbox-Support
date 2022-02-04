@@ -1,6 +1,6 @@
 ---
 name: "Feature request \U0001F4A1"
-about: Suggest an idea for this project, If you have additional questions, please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
+about: Suggest an idea for this project. If you have additional questions, please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
 title: ''
 labels: ''
 assignees: ''
