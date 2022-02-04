@@ -1,1004 +1,1325 @@
-
 <!doctype html>
 <html lang="en-US">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-	<link rel="preload" href="https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/style.css?cb=240" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/style.css?cb=240"></noscript>
-	<script>
-		/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			// unbind listeners
-			if( link.addEventListener ){
-				link.removeEventListener( "load", enableStylesheet );
-			} else if( link.attachEvent ){
-				link.detachEvent( "onload", enableStylesheet );
-			}
-			link.setAttribute( "onload", null );
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
-
-
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-	</script>
-	<title>Feedback &#8211; IBM Developer</title>
-<link rel='dns-prefetch' href='//1.www.s81c.com' />
-<link rel='dns-prefetch' href='//resources.digital-cloud-ibm.medallia.eu' />
-<link rel='dns-prefetch' href='//s.w.org' />
-<link rel="alternate" type="application/rss+xml" title="IBM Developer &raquo; Feed" href="https://developer.ibm.com/feed/" />
-<link rel="alternate" type="application/rss+xml" title="IBM Developer &raquo; Comments Feed" href="https://developer.ibm.com/comments/feed/" />
-    <link rel="canonical" href="https://developer.ibm.com/feedback/" />
-        <!-- <meta name="madeupmeta" content="/feedback/--https://developer.ibm.com" /> -->
-    <meta name="description" content="Site feedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;" />
-    <meta name="keywords" content="">
-
-    <!-- if condition here for og  og_meta -->
-          <meta property="og:title" content="Feedback" />
-      <meta property="og:description" content="Site feedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;" />
-      <meta property="og:type" content="" />
-      <meta property="og:site_name" content="IBM Developer" />
-      <meta property="og:url" content="https://developer.ibm.com/feedback/" />
-      <meta property="og:image" content="https://s3.us.cloud-object-storage.appdomain.cloud/ibmdevwp/icons/social/social.jpg"/>
-        <!-- if condition here for twitter twitter_meta -->
-    <meta property="twitter:account_id" content="16362921" />
-
-    <meta name="twitter:card" content="summary">      <meta name="twitter:url" content="https://developer.ibm.com/feedback/">
-      <meta name="twitter:title" content="Feedback">
-      <meta name="twitter:description" content="Site feedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;">
-      <meta name="twitter:image" content="https://s3.us.cloud-object-storage.appdomain.cloud/ibmdevwp/icons/social/social.jpg">
-      <meta property="twitter:image:src" content="https://s3.us.cloud-object-storage.appdomain.cloud/ibmdevwp/icons/social/social.jpg" />
-      <meta name="twitter:site" content="https://developer.ibm.com">
-      <meta name="twitter:creator" content="@ibmdeveloper">
-    
-    <meta name="ahrefs-site-verification" content="94fa8aa62b043c70442b349844ee10902416702fc2728b6a378a00d49ecc61d7">
-
-    <!-- BEGIN: Use this section to set page specific variables for the Page Tag -->
-  	<script language="JavaScript">var NTPT_PGEXTRA="ibmCmaId=46908&ibmContentAreas=";</script>
-  	<!--END -->
-    <script>
-  		digitalData = {
-  				"page": {
-  					"category": {
-  						"primaryCategory": "SOFDCACLZZ"
-  					},
-  					"pageInfo": {
-  						"effectiveDate": "2018-08-27T00:00:00",
-  						"language": "en",
-  						"publishDate": "2018-08-27 19:14:39",
-  						"expiryDate": "",
-  						"publisher": "IBM Corporation",
-  						"version": "v18",
-  						"ibm": {
-  							"contentDelivery": "IBM Developer template",
-  							"contentProducer": "IBM Developer",
-  							"country": "ZZ",
-                "contentArea": "",
-  							"owner": "developerWorks Content/Raleigh/IBM",
-  							"siteID": "DWNEXT",
-  							"subject": "ZZ000",
-  							"type": "",
-  							"contentId": "46908",
-  						},
-  						"keywords": "",
-  						"description": "Site feedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;"
-  					}
-  				}
-  			};
-
-        window._analytics = {
-          "coremetrics": false,
-          "optimizely": false,
-          "googleAddServices": false,
-          "addRoll": false,
-          "intercom": false,
-          "fullStory": false,
-          "hotjar": false,
-          "tealeaf": false,
-          "nps": true,
-          "segment_key": 'HU3dbkAG5wE0F1IkRf9S1RexlAqo3jby'
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="preload" href="https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/style.css?cb=240"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/style.css?cb=240">
+  </noscript>
+  <script>
+    /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+    /* This file is meant as a standalone workflow for
+    - testing support for link[rel=preload]
+    - enabling async CSS loading in browsers that do not support rel=preload
+    - applying rel preload css once loaded, whether supported or not.
+    */
+    (function (w) {
+      "use strict";
+      // rel=preload support test
+      if (!w.loadCSS) {
+        w.loadCSS = function () { };
+      }
+      // define on the loadCSS obj
+      var rp = loadCSS.relpreload = {};
+      // rel=preload feature support test
+      // runs once and returns a function for compat purposes
+      rp.support = (function () {
+        var ret;
+        try {
+          ret = w.document.createElement("link").relList.supports("preload");
+        } catch (e) {
+          ret = false;
+        }
+        return function () {
+          return ret;
         };
-  	</script>
-  	<!-- Segment meta tag -->
-  	<meta name="segment" property="developerWorks (developerWorks)" productTitle="developerWorks" value="Home English (developerWorks)"/>
-    <link rel="icon" href="//www.ibm.com/favicon.ico"/>
+      })();
 
-    		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/developer.ibm.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.6.7"}};
-			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
-		<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-	<link rel='stylesheet' id='pagepost_css-css'  href='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/css/pagepost.css?ver=5.6.7' type='text/css' media='all' />
-<script type='text/javascript' src='https://developer.ibm.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
-<script type='text/javascript' src='https://developer.ibm.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
-<script type='text/javascript' id='authLink-script-js-extra'>
-/* <![CDATA[ */
-var authLinkAction = {"ajax_url":"https:\/\/developer.ibm.com\/wp-admin\/admin-ajax.php","nonce":"e54a8f5755"};
+      // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+      // then change that media back to its intended value on load
+      rp.bindMediaToggle = function (link) {
+        // remember existing media attr for ultimate state, or default to 'all'
+        var finalMedia = link.media || "all";
+
+        function enableStylesheet() {
+          // unbind listeners
+          if (link.addEventListener) {
+            link.removeEventListener("load", enableStylesheet);
+          } else if (link.attachEvent) {
+            link.detachEvent("onload", enableStylesheet);
+          }
+          link.setAttribute("onload", null);
+          link.media = finalMedia;
+        }
+
+        // bind load handlers to enable media
+        if (link.addEventListener) {
+          link.addEventListener("load", enableStylesheet);
+        } else if (link.attachEvent) {
+          link.attachEvent("onload", enableStylesheet);
+        }
+
+        // Set rel and non-applicable media type to start an async request
+        // note: timeout allows this to happen async to let rendering continue in IE
+        setTimeout(function () {
+          link.rel = "stylesheet";
+          link.media = "only x";
+        });
+        // also enable media after 3 seconds,
+        // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+        setTimeout(enableStylesheet, 3000);
+      };
+
+      // loop through link elements in DOM
+      rp.poly = function () {
+        // double check this to prevent external calls from running
+        if (rp.support()) {
+          return;
+        }
+        var links = w.document.getElementsByTagName("link");
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          // qualify links to those with rel=preload and as=style attrs
+          if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+            // prevent rerunning on link
+            link.setAttribute("data-loadcss", true);
+            // bind listeners to toggle media back
+            rp.bindMediaToggle(link);
+          }
+        }
+      };
+
+      // if unsupported, run the polyfill
+      if (!rp.support()) {
+        // run once at least
+        rp.poly();
+
+        // rerun poly on an interval until onload
+        var run = w.setInterval(rp.poly, 500);
+        if (w.addEventListener) {
+          w.addEventListener("load", function () {
+            rp.poly();
+            w.clearInterval(run);
+          });
+        } else if (w.attachEvent) {
+          w.attachEvent("onload", function () {
+            rp.poly();
+            w.clearInterval(run);
+          });
+        }
+      }
+
+
+      // commonjs
+      if (typeof exports !== "undefined") {
+        exports.loadCSS = loadCSS;
+      }
+      else {
+        w.loadCSS = loadCSS;
+      }
+    }(typeof global !== "undefined" ? global : this));
+  </script>
+  <title>Feedback &#8211; IBM Developer</title>
+  <link rel='dns-prefetch' href='//1.www.s81c.com' />
+  <link rel='dns-prefetch' href='//resources.digital-cloud-ibm.medallia.eu' />
+  <link rel='dns-prefetch' href='//s.w.org' />
+  <link rel="alternate" type="application/rss+xml" title="IBM Developer &raquo; Feed"
+    href="https://developer.ibm.com/feed/" />
+  <link rel="alternate" type="application/rss+xml" title="IBM Developer &raquo; Comments Feed"
+    href="https://developer.ibm.com/comments/feed/" />
+  <link rel="canonical" href="https://developer.ibm.com/feedback/" />
+  <!-- <meta name="madeupmeta" content="/feedback/--https://developer.ibm.com" /> -->
+  <meta name="description"
+    content="Technology feedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;" />
+  <meta name="keywords" content="">
+
+  <!-- if condition here for og  og_meta -->
+  <meta property="og:title" content="Feedback" />
+  <meta property="og:description"
+    content="Technology Sandboxfeedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;" />
+  <meta property="og:type" content="" />
+  <meta property="og:site_name" content="IBM Developer" />
+  <meta property="og:url" content="https://developer.ibm.com/feedback/" />
+  <meta property="og:image"
+    content="https://s3.us.cloud-object-storage.appdomain.cloud/ibmdevwp/icons/social/social.jpg" />
+  <!-- if condition here for twitter twitter_meta -->
+  <meta property="twitter:account_id" content="16362921" />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://developer.ibm.com/feedback/">
+  <meta name="twitter:title" content="Feedback">
+  <meta name="twitter:description"
+    content="Technology Sandboxfeedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;">
+  <meta name="twitter:image"
+    content="https://s3.us.cloud-object-storage.appdomain.cloud/ibmdevwp/icons/social/social.jpg">
+  <meta property="twitter:image:src"
+    content="https://s3.us.cloud-object-storage.appdomain.cloud/ibmdevwp/icons/social/social.jpg" />
+  <meta name="twitter:site" content="https://developer.ibm.com">
+  <meta name="twitter:creator" content="@ibmdeveloper">
+
+  <meta name="ahrefs-site-verification" content="94fa8aa62b043c70442b349844ee10902416702fc2728b6a378a00d49ecc61d7">
+
+  <!-- BEGIN: Use this section to set page specific variables for the Page Tag -->
+  <script language="JavaScript">var NTPT_PGEXTRA = "ibmCmaId=46908&ibmContentAreas=";</script>
+  <!--END -->
+  <script>
+    digitalData = {
+      "page": {
+        "category": {
+          "primaryCategory": "SOFDCACLZZ"
+        },
+        "pageInfo": {
+          "effectiveDate": "2018-08-27T00:00:00",
+          "language": "en",
+          "publishDate": "2018-08-27 19:14:39",
+          "expiryDate": "",
+          "publisher": "IBM Corporation",
+          "version": "v18",
+          "ibm": {
+            "contentDelivery": "IBM Developer template",
+            "contentProducer": "IBM Developer",
+            "country": "ZZ",
+            "contentArea": "",
+            "owner": "developerWorks Content/Raleigh/IBM",
+            "siteID": "DWNEXT",
+            "subject": "ZZ000",
+            "type": "",
+            "contentId": "46908",
+          },
+          "keywords": "",
+          "description": "Site feedback and FAQ You have questions. We have answers. This page is designed to help you find answers for&hellip;"
+        }
+      }
+    };
+
+    window._analytics = {
+      "coremetrics": false,
+      "optimizely": false,
+      "googleAddServices": false,
+      "addRoll": false,
+      "intercom": false,
+      "fullStory": false,
+      "hotjar": false,
+      "tealeaf": false,
+      "nps": true,
+      "segment_key": 'HU3dbkAG5wE0F1IkRf9S1RexlAqo3jby'
+    };
+  </script>
+  <!-- Segment meta tag -->
+  <meta name="segment" property="developerWorks (developerWorks)" productTitle="developerWorks"
+    value="Home English (developerWorks)" />
+  <link rel="icon" href="//www.ibm.com/favicon.ico" />
+
+  <script type="text/javascript">
+    window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/developer.ibm.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.6.7" } };
+    !function (e, a, t) { var n, r, o, i = a.createElement("canvas"), p = i.getContext && i.getContext("2d"); function s(e, t) { var a = String.fromCharCode; p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, e), 0, 0); e = i.toDataURL(); return p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, t), 0, 0), e === i.toDataURL() } function c(e) { var t = a.createElement("script"); t.src = e, t.defer = t.type = "text/javascript", a.getElementsByTagName("head")[0].appendChild(t) } for (o = Array("flag", "emoji"), t.supports = { everything: !0, everythingExceptFlag: !0 }, r = 0; r < o.length; r++)t.supports[o[r]] = function (e) { if (!p || !p.fillText) return !1; switch (p.textBaseline = "top", p.font = "600 32px Arial", e) { case "flag": return s([127987, 65039, 8205, 9895, 65039], [127987, 65039, 8203, 9895, 65039]) ? !1 : !s([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819]) && !s([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]); case "emoji": return !s([55357, 56424, 8205, 55356, 57212], [55357, 56424, 8203, 55356, 57212]) }return !1 }(o[r]), t.supports.everything = t.supports.everything && t.supports[o[r]], "flag" !== o[r] && (t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && t.supports[o[r]]); t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && !t.supports.flag, t.DOMReady = !1, t.readyCallback = function () { t.DOMReady = !0 }, t.supports.everything || (n = function () { t.readyCallback() }, a.addEventListener ? (a.addEventListener("DOMContentLoaded", n, !1), e.addEventListener("load", n, !1)) : (e.attachEvent("onload", n), a.attachEvent("onreadystatechange", function () { "complete" === a.readyState && t.readyCallback() })), (n = t.source || {}).concatemoji ? c(n.concatemoji) : n.wpemoji && n.twemoji && (c(n.twemoji), c(n.wpemoji))) }(window, document, window._wpemojiSettings);
+  </script>
+  <style type="text/css">
+    img.wp-smiley,
+    img.emoji {
+      display: inline !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 1em !important;
+      width: 1em !important;
+      margin: 0 .07em !important;
+      vertical-align: -0.1em !important;
+      background: none !important;
+      padding: 0 !important;
+    }
+  </style>
+  <link rel='stylesheet' id='pagepost_css-css'
+    href='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/css/pagepost.css?ver=5.6.7' type='text/css'
+    media='all' />
+  <script type='text/javascript' src='https://developer.ibm.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1'
+    id='jquery-core-js'></script>
+  <script type='text/javascript' src='https://developer.ibm.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2'
+    id='jquery-migrate-js'></script>
+  <script type='text/javascript' id='authLink-script-js-extra'>
+    /* <![CDATA[ */
+    var authLinkAction = { "ajax_url": "https:\/\/developer.ibm.com\/wp-admin\/admin-ajax.php", "nonce": "e54a8f5755" };
 /* ]]> */
-</script>
-<script type='text/javascript' src='https://developer.ibm.com/site-content/plugins/w3-ibm-id-auth/includes/../js/authPageAccess.js?ver=5.6.7' id='authLink-script-js'></script>
-<script defer type='text/javascript' src='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/js/ibmcode.js?ver=20151217' id='code-utils-defer-js'></script>
-<script async type='text/javascript' src='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/js/carbon-components.min.js?cb=123&#038;ver=5.6.7' id='carbon-components-async-js'></script>
-<script async type='text/javascript' src='//1.www.s81c.com/common/stats/ida_stats.js' id='coremetrics-async-js'></script>
-<script async type='text/javascript' src='//resources.digital-cloud-ibm.medallia.eu/wdceuibm/2398/onsite/embed.js' id='medallia-async-js'></script>
-<link rel="https://api.w.org/" href="https://developer.ibm.com/developerapi/" /><link rel="alternate" type="application/json" href="https://developer.ibm.com/developerapi/wp/v2/pages/46908" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://developer.ibm.com/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://developer.ibm.com/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress 5.6.7" />
-<link rel='shortlink' href='https://developer.ibm.com/?p=46908' />
-<link rel="alternate" type="application/json+oembed" href="https://developer.ibm.com/developerapi/oembed/1.0/embed?url=https%3A%2F%2Fdeveloper.ibm.com%2Ffeedback%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://developer.ibm.com/developerapi/oembed/1.0/embed?url=https%3A%2F%2Fdeveloper.ibm.com%2Ffeedback%2F&#038;format=xml" />
+  </script>
+  <script type='text/javascript'
+    src='https://developer.ibm.com/site-content/plugins/w3-ibm-id-auth/includes/../js/authPageAccess.js?ver=5.6.7'
+    id='authLink-script-js'></script>
+  <script defer type='text/javascript'
+    src='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/js/ibmcode.js?ver=20151217'
+    id='code-utils-defer-js'></script>
+  <script async type='text/javascript'
+    src='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/js/carbon-components.min.js?cb=123&#038;ver=5.6.7'
+    id='carbon-components-async-js'></script>
+  <script async type='text/javascript' src='//1.www.s81c.com/common/stats/ida_stats.js'
+    id='coremetrics-async-js'></script>
+  <script async type='text/javascript' src='//resources.digital-cloud-ibm.medallia.eu/wdceuibm/2398/onsite/embed.js'
+    id='medallia-async-js'></script>
+  <link rel="https://api.w.org/" href="https://developer.ibm.com/developerapi/" />
+  <link rel="alternate" type="application/json" href="https://developer.ibm.com/developerapi/wp/v2/pages/46908" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://developer.ibm.com/xmlrpc.php?rsd" />
+  <link rel="wlwmanifest" type="application/wlwmanifest+xml"
+    href="https://developer.ibm.com/wp-includes/wlwmanifest.xml" />
+  <meta name="generator" content="WordPress 5.6.7" />
+  <link rel='shortlink' href='https://developer.ibm.com/?p=46908' />
+  <link rel="alternate" type="application/json+oembed"
+    href="https://developer.ibm.com/developerapi/oembed/1.0/embed?url=https%3A%2F%2Fdeveloper.ibm.com%2Ffeedback%2F" />
+  <link rel="alternate" type="text/xml+oembed"
+    href="https://developer.ibm.com/developerapi/oembed/1.0/embed?url=https%3A%2F%2Fdeveloper.ibm.com%2Ffeedback%2F&#038;format=xml" />
 </head>
-<body id="ibm-com" data-envt="developer.ibm.com" data-loggedin="" data-nls="" data-envt="production" class="page-template page-template-page-static page-template-page-static-php page page-id-46908 no-fixed-menu no-sidebar nosb">
-		<div class="bx--header--website-wrap">
-  <div class="code_content__wrap">
 
-    <header aria-label="IBM Platform Name" class="bx--header" role="banner">
-      <a class="bx--skip-to-content" href="#main-content" tabindex="0">Skip to main content</a>
-      <button aria-label="Open menu" id="developer-burger" class="bx--header__action--menu bx--header__action bx--header__menu-trigger bx--header__menu-toggle" title="Open menu" type="button">
-        <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="will-change: transform;">
-          <path d="M2 14.8h16V16H2zm0-3.6h16v1.2H2zm0-3.6h16v1.2H2zM2 4h16v1.2H2z"></path>
-        </svg>
-      </button>
-      <a class="bx--header__name-old" href="https://developer.ibm.com/"><span class="bx--header__name--prefix">IBM</span>&nbsp;Developer</a>
-      <div class="bx--header__name">
-        <a class="bx--header__ibm" href="//www.ibm.com">
-          <svg class="Footer-module--logo--3otJM" width="47" height="30" viewBox="0 -10 85 52" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M0 32h15.689v-2.038H0zM0 27.721h15.689v-2.038H0zM4.483 23.442h6.724v-2.037H4.483zM4.483 19.164h6.724v-2.038H4.483zM4.483 14.885h6.724v-2.037H4.483zM4.482 10.606h6.724V8.568H4.482zM0 6.327h15.689V4.29H0zM0 2.049h15.689V.011H0zM17.93 29.963V32h16.504a8.521 8.521 0 0 0 5.54-2.037H17.93zM17.93 25.683v2.038h23.914a8.535 8.535 0 0 0 .85-2.038H17.93zM22.412 23.442h6.724v-2.037h-6.724zM40.124 17.126H22.412v2.038H41.77a8.62 8.62 0 0 0-1.645-2.038M22.413 12.848v2.036h17.786a8.612 8.612 0 0 0 1.644-2.037h-19.43zM42.693 6.327a8.447 8.447 0 0 0-.85-2.037H17.93v2.037h24.763zM39.974 2.049a8.521 8.521 0 0 0-5.54-2.037H17.93v2.037h22.044zM22.412 10.606h6.724V8.568h-6.724zM35.453 10.606h7.29a8.603 8.603 0 0 0 .248-2.038h-7.538v2.038zM35.453 21.405v2.037h7.538c0-.703-.09-1.384-.248-2.037h-7.29zM57.457 0H44.825v2.038h13.34zM44.826 32h11.21v-2.038h-11.21zM44.826 27.72h11.21v-2.038h-11.21zM49.309 23.439h6.727v-2.038h-6.727zM49.309 19.159h6.727v-2.038h-6.727zM69.488 32h11.21v-2.038h-11.21zM69.488 27.72h11.21v-2.038h-11.21zM69.488 23.439h6.726v-2.038h-6.726zM69.487 19.159h6.726v-2.038h-6.726zM69.488 14.879h6.726V12.84H63.606l-.707 2.038h5.903l.686-1.94zM61.916 12.84H49.31v2.039h6.726v-1.94l.686 1.94h5.903zM76.213 8.56H65.091l-.707 2.038h11.83zM68.06 0l-.706 2.038h13.344V0zM62.757 32l.72-2.038h-1.432zM61.254 27.72h3.015l.72-2.038h-4.455zM59.743 23.44h6.037l.72-2.039h-7.476zM58.232 19.159h9.06l.719-2.038h-10.5zM49.309 10.598h11.83l-.707-2.038H49.309zM65.868 6.318h14.83V4.28H66.576zM58.947 4.28H44.826v2.038h14.828z"></path></g></svg>
-        </a>
-        <a href="https://developer.ibm.com/" class="bx--header__ibmdeveloper">
-          IBM <b>Developer</b>        </a>
-      </div>
+<body id="ibm-com" data-envt="developer.ibm.com" data-loggedin="" data-nls="" data-envt="production"
+  class="page-template page-template-page-static page-template-page-static-php page page-id-46908 no-fixed-menu no-sidebar nosb">
+  <div class="bx--header--website-wrap">
+    <div class="code_content__wrap">
 
-      <nav aria-label="IBM [Platform]" class="bx--header__nav">
-        <ul class="bx--header__menu-bar" role="menubar"><li id='topics' class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'><a  aria-haspopup="menu" aria-expanded="false" role="menuitem" class="bx--header__menu-item bx--header__menu-title" href="#">Topics<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow"><path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path></svg></a><div class="mega-menu bx--header__menu sub-menu" role="menu"><div class="mega-menu-inner"><div class="code_content__wrap"><ul>
- 	<li><h4>Technologies</h4></li>
- 	<li><a href="/technologies/analytics/">Analytics</a></li>
- 	<li><a href="/technologies/artificial-intelligence/">Artificial Intelligence</a></li>
- 	<li><a href="/technologies/containers/">Containers</a></li>
- 	<li><a href="/technologies/">See all</a></li>
-</ul>
-<ul>
- 	<li><h4>Languages</h4></li>
- 	<li><a href="/languages/cobol/">COBOL</a></li>
- 	<li><a href="/languages/java/">Java</a></li>
- 	<li><a href="/languages/node-js/">Node.js</a></li>
- 	<li><a href="/languages/python/">Python</a></li>
- 	<li><a href="/languages/">See all</a></li>
-</ul>
-<ul>
- 	<li><h4>Development practices</h4></li>
- 	<li><a href="/devpractices/devops/">DevOps</a></li>
-	<li><a href="/devpractices/open-source-development/">Open-source development</a></li>
- 	<li><a href="/devpractices/">See all</a></li>
-<br />
-<br />
- 	<li><h4>Architectures & Deployment Models</h4></li>
- 	<li><a href="/depmodels/cloud/">Cloud</a></li>
- 	<li><a href="/depmodels/edge-computing/">Edge Computing</a></li>
- 	<li><a href="/depmodels/microservices/">Microservices</a></li>
- 	<li><a href="/depmodels/">See all</a></li>
-</ul>
-<ul>
- 	<li><h4>Solutions</h4></li>
- 	<li><a href="/solutions/application-modernization/">App Modernization</a></li>
- 	<li><a href="/solutions/security/">Security</a></li>
- 	<li><a href="/solutions/">See all</a></li>
-<br />
-<br />
-        <li><h4>Industries</h4></li>
- 	<li><a href="/industries/finance/">Finance</a></li>
- 	<li><a href="/industries/gaming/">Gaming</a></li>
- 	<li><a href="/industries/retail/">Retail</a></li>
- 	<li><a href="/industries/">See all</a></li>
-</ul>
-</div></div></div></li>
-<li id='products_&_services' class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'><a  aria-haspopup="menu" aria-expanded="false" role="menuitem" class="bx--header__menu-item bx--header__menu-title" href="#">Products & Services<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow"><path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path></svg></a><div class="mega-menu bx--header__menu sub-menu" role="menu"><div class="mega-menu-inner"><div class="code_content__wrap"><ul>
-  <li><h4>Open Source</h4></li>
-  <li><a href="/components/kubernetes/">Kubernetes</a></li>
-  <li><a href="/components/node-red/">Node-RED</a></li>
-  <li><a href="/components/istio/">Istio</a></li>
-  <li><a href="/components/tensorflow/">TensorFlow</a></li>
-  <li><a href="/components/open-liberty/">Open Liberty</a></li>
-  <li><a href="/components/">See all</a></li>
-</ul>
-<ul>
-  <li><h4>IBM Products & Services</h4></li>
-  <li><a href="/components/cloud-pak-for-data/">IBM Cloud Pak for Data</a></li>
-  <li><a href="/components/cloud-pak-for-integration/">IBM Cloud Pak for Integration</a></li>
-  <li><a href="/components/ibmz/">IBM Z</a></li>
-  <li><a href="/components/redhat-openshift-ibm-cloud/">Red Hat OpenShift on IBM Cloud</a></li>
-  <li><a href="/components/websphere-hybrid-edition/">WebSphere Hybrid Edition</a></li>
-  <li><a href="/components/">See all</a></li>
-</ul>
-<ul>
-  <li><h4>APIs</h4></li>
-  <li><a href="/apis/">IBM API Hub</a></li>
-  <li><hr style="margin-top: 1rem; margin-bottom: 1rem"></li>
-  <li><a href="/apis/catalog/orderoptimizer--ibm-watson-order-optimizer/Introduction/">IBM Sterling Fulfillment Optimizer with Watson</a></li>
-  <li><a href="/apis/catalog/dataquality4ai--data-quality-for-ai/api/API--dataquality4ai--data-quality/">Data Quality for AI</a></li>
-  <li><a href="/apis/catalog/aspera--aspera-automation-api/api/API--aspera--aspera-automation-api#Createanaction/">Aspera Automation API</a></li>
-  <li><a href="/apis/catalog/">See all</a></li>
-</ul></div></div></div></li>
-<li id='community' class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'><a  aria-haspopup="menu" aria-expanded="false" role="menuitem" class="bx--header__menu-item bx--header__menu-title" href="#">Community<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow"><path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path></svg></a><div class="mega-menu bx--header__menu sub-menu" role="menu"><div class="mega-menu-inner"><div class="code_content__wrap"><ul>
-  <li><a href="/community/">Home</a></li>
-  <li><a href="/blogs/">Blog posts</a></li>
-  <li><a href="/events/">Events</a></li>
-  <li><a href="/conferences/">Digital conferences</a></li>
-  <li><a href="/videos/">Videos</a></li>
- <!-- <li><a href="/livestream/">Livestreaming</a></li> -->
-  <li><a href="/podcasts/">Podcasts</a></li>
-  <!-- <li><a href="/cities/">Cities</a></li> -->
-  <li><a href="/newsletters/">Newsletters</a></li>
-</ul>
-<div>
-<ul>
-  <li><h4>Get Involved</h4></li>
-  <li><a href="/callforcode/?cm_sp=Developer-_-cfc-2020-_-nav-ov75914">Call for Code Global Challenge</a></li>
-</ul>
-<br />
-<ul>
-  <li><h4>Workshops</h4></li>
-  <li><a href="/openshift-world-tour/">Build Smart on Kubernetes World Tour</a></li>
-</ul>
-<br />
-<ul>
-  <li><h4>Partners</h4></li>
-  <li><a href="/partner-developer-resources/">Technical resources for partners</a></li>
-</ul>
-</div></div></div></div></li>
-<li id='open_source_at_ibm' class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'><a  aria-haspopup="menu" aria-expanded="false" role="menuitem" class="bx--header__menu-item bx--header__menu-title" href="#">Open source at IBM<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow"><path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path></svg></a><div class="mega-menu bx--header__menu sub-menu" role="menu"><div class="mega-menu-inner"><div class="code_content__wrap"><ul>
-  <li><a href="https://www.ibm.com/opensource/">Home</a></li>
-  <li><a href="https://www.ibm.com/opensource/community-involvement/">Communities</a></li>
-  <li><a href="https://www.ibm.com/opensource/enterprise/">Culture</a></li>
-  <li><a href="https://www.ibm.com/opensource/open-projects/">Open projects</a></li>
-  <li><a href="https://www.ibm.com/opensource/story/">Our story</a></li>
-  <li><a href="/exchanges/models/">Model Asset eXchange</a></li>
-  <li><a href="/exchanges/data/">Data Asset eXchange</a></li>
-</ul></div></div></div></li>
-</ul>      </nav>
-      <div class="bx--header__global">
-        <div id="header-search-module" class="GlobalSearch-module--container GlobalSearch-module--hidden" role="search">
-          <label for="search-input" id="search-label" class="GlobalSearch-module--label">Search</label>
-          <form action="https://developer.ibm.com/" method="GET" class="GlobalSearch-module--inputWrapper" role="combobox" aria-owns="search-menu" aria-haspopup="menu" aria-expanded="false">
-            <button tabindex="0" class="GlobalSearch-module--searchButton GlobalSearch-module--search-button--search" type="button" aria-label="Open search">
-              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change:transform" description="Open search" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
-                <path d="M30 28.59L22.45 21A11 11 0 1 0 21 22.45L28.59 30zM5 14a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"></path>
-              </svg>
-            </button>
-                            <input type="text" autocomplete="off" tabindex="-1" aria-autocomplete="list" aria-controls="search-menu" aria-activedescendant="menu-item-0" class="GlobalSearch-module--input GlobalSearch-module--hidden" id="search-input-header" placeholder="Search IBM Developer" value="" name="q">
-            
-            <button tabindex="-1" class="GlobalSearch-module--searchButton GlobalSearch-module--search-button--close GlobalSearch-module--hidden" type="button" aria-label="Clear search">
-              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change:transform" description="Clear search" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
-                <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z"></path>
-              </svg>
-            </button>
-          </form>
-          <ul aria-labelledby="search-label" role="menu" id="search-menu" class="GlobalSearch-module--list GlobalSearch-module--hidden"></ul>
+      <header aria-label="IBM Platform Name" class="bx--header" role="banner">
+        <a class="bx--skip-to-content" href="#main-content" tabindex="0">Skip to main content</a>
+        <button aria-label="Open menu" id="developer-burger"
+          class="bx--header__action--menu bx--header__action bx--header__menu-trigger bx--header__menu-toggle"
+          title="Open menu" type="button">
+          <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+            height="20" viewBox="0 0 20 20" aria-hidden="true" style="will-change: transform;">
+            <path d="M2 14.8h16V16H2zm0-3.6h16v1.2H2zm0-3.6h16v1.2H2zM2 4h16v1.2H2z"></path>
+          </svg>
+        </button>
+        <a class="bx--header__name-old" href="https://developer.ibm.com/"><span
+            class="bx--header__name--prefix">IBM</span>&nbsp;Developer</a>
+        <div class="bx--header__name">
+          <a class="bx--header__ibm" href="//www.ibm.com">
+            <svg class="Footer-module--logo--3otJM" width="47" height="30" viewBox="0 -10 85 52"
+              xmlns="http://www.w3.org/2000/svg">
+              <g fill-rule="evenodd">
+                <path
+                  d="M0 32h15.689v-2.038H0zM0 27.721h15.689v-2.038H0zM4.483 23.442h6.724v-2.037H4.483zM4.483 19.164h6.724v-2.038H4.483zM4.483 14.885h6.724v-2.037H4.483zM4.482 10.606h6.724V8.568H4.482zM0 6.327h15.689V4.29H0zM0 2.049h15.689V.011H0zM17.93 29.963V32h16.504a8.521 8.521 0 0 0 5.54-2.037H17.93zM17.93 25.683v2.038h23.914a8.535 8.535 0 0 0 .85-2.038H17.93zM22.412 23.442h6.724v-2.037h-6.724zM40.124 17.126H22.412v2.038H41.77a8.62 8.62 0 0 0-1.645-2.038M22.413 12.848v2.036h17.786a8.612 8.612 0 0 0 1.644-2.037h-19.43zM42.693 6.327a8.447 8.447 0 0 0-.85-2.037H17.93v2.037h24.763zM39.974 2.049a8.521 8.521 0 0 0-5.54-2.037H17.93v2.037h22.044zM22.412 10.606h6.724V8.568h-6.724zM35.453 10.606h7.29a8.603 8.603 0 0 0 .248-2.038h-7.538v2.038zM35.453 21.405v2.037h7.538c0-.703-.09-1.384-.248-2.037h-7.29zM57.457 0H44.825v2.038h13.34zM44.826 32h11.21v-2.038h-11.21zM44.826 27.72h11.21v-2.038h-11.21zM49.309 23.439h6.727v-2.038h-6.727zM49.309 19.159h6.727v-2.038h-6.727zM69.488 32h11.21v-2.038h-11.21zM69.488 27.72h11.21v-2.038h-11.21zM69.488 23.439h6.726v-2.038h-6.726zM69.487 19.159h6.726v-2.038h-6.726zM69.488 14.879h6.726V12.84H63.606l-.707 2.038h5.903l.686-1.94zM61.916 12.84H49.31v2.039h6.726v-1.94l.686 1.94h5.903zM76.213 8.56H65.091l-.707 2.038h11.83zM68.06 0l-.706 2.038h13.344V0zM62.757 32l.72-2.038h-1.432zM61.254 27.72h3.015l.72-2.038h-4.455zM59.743 23.44h6.037l.72-2.039h-7.476zM58.232 19.159h9.06l.719-2.038h-10.5zM49.309 10.598h11.83l-.707-2.038H49.309zM65.868 6.318h14.83V4.28H66.576zM58.947 4.28H44.826v2.038h14.828z">
+                </path>
+              </g>
+            </svg>
+          </a>
+          <a href="https://developer.ibm.com/" class="bx--header__ibmdeveloper">
+            IBM <b>Developer</b> </a>
         </div>
-        <div id="header-login-module" aria-expanded="false" class="GlobalLogin-module--container GlobalLogin-module--hidden" role="login">
-                      <button aria-label="Open menu" class="bx--header__action--login bx--header__action" title="Open menu" type="button">
-              <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
-                <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2zm-6 24.38v-2A3.22 3.22 0 0 1 13 21h6a3.22 3.22 0 0 1 3 3.39v2a11.92 11.92 0 0 1-12 0zm14-1.46v-.61A5.21 5.21 0 0 0 19 19h-6a5.2 5.2 0 0 0-5 5.31v.59a12 12 0 1 1 16 0z"></path><path d="M16 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"></path>
+
+        <nav aria-label="IBM [Platform]" class="bx--header__nav">
+          <ul class="bx--header__menu-bar" role="menubar">
+            <li id='topics'
+              class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'>
+              <a aria-haspopup="menu" aria-expanded="false" role="menuitem"
+                class="bx--header__menu-item bx--header__menu-title" href="#">Topics<svg focusable="false"
+                  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6"
+                  viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow">
+                  <path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path>
+                </svg></a>
+              <div class="mega-menu bx--header__menu sub-menu" role="menu">
+                <div class="mega-menu-inner">
+                  <div class="code_content__wrap">
+                    <ul>
+                      <li>
+                        <h4>Technologies</h4>
+                      </li>
+                      <li><a href="/technologies/analytics/">Analytics</a></li>
+                      <li><a href="/technologies/artificial-intelligence/">Artificial Intelligence</a></li>
+                      <li><a href="/technologies/containers/">Containers</a></li>
+                      <li><a href="/technologies/">See all</a></li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <h4>Languages</h4>
+                      </li>
+                      <li><a href="/languages/cobol/">COBOL</a></li>
+                      <li><a href="/languages/java/">Java</a></li>
+                      <li><a href="/languages/node-js/">Node.js</a></li>
+                      <li><a href="/languages/python/">Python</a></li>
+                      <li><a href="/languages/">See all</a></li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <h4>Development practices</h4>
+                      </li>
+                      <li><a href="/devpractices/devops/">DevOps</a></li>
+                      <li><a href="/devpractices/open-source-development/">Open-source development</a></li>
+                      <li><a href="/devpractices/">See all</a></li>
+                      <br />
+                      <br />
+                      <li>
+                        <h4>Architectures & Deployment Models</h4>
+                      </li>
+                      <li><a href="/depmodels/cloud/">Cloud</a></li>
+                      <li><a href="/depmodels/edge-computing/">Edge Computing</a></li>
+                      <li><a href="/depmodels/microservices/">Microservices</a></li>
+                      <li><a href="/depmodels/">See all</a></li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <h4>Solutions</h4>
+                      </li>
+                      <li><a href="/solutions/application-modernization/">App Modernization</a></li>
+                      <li><a href="/solutions/security/">Security</a></li>
+                      <li><a href="/solutions/">See all</a></li>
+                      <br />
+                      <br />
+                      <li>
+                        <h4>Industries</h4>
+                      </li>
+                      <li><a href="/industries/finance/">Finance</a></li>
+                      <li><a href="/industries/gaming/">Gaming</a></li>
+                      <li><a href="/industries/retail/">Retail</a></li>
+                      <li><a href="/industries/">See all</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li id='products_&_services'
+              class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'>
+              <a aria-haspopup="menu" aria-expanded="false" role="menuitem"
+                class="bx--header__menu-item bx--header__menu-title" href="#">Products & Services<svg focusable="false"
+                  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6"
+                  viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow">
+                  <path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path>
+                </svg></a>
+              <div class="mega-menu bx--header__menu sub-menu" role="menu">
+                <div class="mega-menu-inner">
+                  <div class="code_content__wrap">
+                    <ul>
+                      <li>
+                        <h4>Open Source</h4>
+                      </li>
+                      <li><a href="/components/kubernetes/">Kubernetes</a></li>
+                      <li><a href="/components/node-red/">Node-RED</a></li>
+                      <li><a href="/components/istio/">Istio</a></li>
+                      <li><a href="/components/tensorflow/">TensorFlow</a></li>
+                      <li><a href="/components/open-liberty/">Open Liberty</a></li>
+                      <li><a href="/components/">See all</a></li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <h4>IBM Products & Services</h4>
+                      </li>
+                      <li><a href="/components/cloud-pak-for-data/">IBM Cloud Pak for Data</a></li>
+                      <li><a href="/components/cloud-pak-for-integration/">IBM Cloud Pak for Integration</a></li>
+                      <li><a href="/components/ibmz/">IBM Z</a></li>
+                      <li><a href="/components/redhat-openshift-ibm-cloud/">Red Hat OpenShift on IBM Cloud</a></li>
+                      <li><a href="/components/websphere-hybrid-edition/">WebSphere Hybrid Edition</a></li>
+                      <li><a href="/components/">See all</a></li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <h4>APIs</h4>
+                      </li>
+                      <li><a href="/apis/">IBM API Hub</a></li>
+                      <li>
+                        <hr style="margin-top: 1rem; margin-bottom: 1rem">
+                      </li>
+                      <li><a href="/apis/catalog/orderoptimizer--ibm-watson-order-optimizer/Introduction/">IBM Sterling
+                          Fulfillment Optimizer with Watson</a></li>
+                      <li><a
+                          href="/apis/catalog/dataquality4ai--data-quality-for-ai/api/API--dataquality4ai--data-quality/">Data
+                          Quality for AI</a></li>
+                      <li><a
+                          href="/apis/catalog/aspera--aspera-automation-api/api/API--aspera--aspera-automation-api#Createanaction/">Aspera
+                          Automation API</a></li>
+                      <li><a href="/apis/catalog/">See all</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li id='community'
+              class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'>
+              <a aria-haspopup="menu" aria-expanded="false" role="menuitem"
+                class="bx--header__menu-item bx--header__menu-title" href="#">Community<svg focusable="false"
+                  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6"
+                  viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow">
+                  <path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path>
+                </svg></a>
+              <div class="mega-menu bx--header__menu sub-menu" role="menu">
+                <div class="mega-menu-inner">
+                  <div class="code_content__wrap">
+                    <ul>
+                      <li><a href="/community/">Home</a></li>
+                      <li><a href="/blogs/">Blog posts</a></li>
+                      <li><a href="/events/">Events</a></li>
+                      <li><a href="/conferences/">Digital conferences</a></li>
+                      <li><a href="/videos/">Videos</a></li>
+                      <!-- <li><a href="/livestream/">Livestreaming</a></li> -->
+                      <li><a href="/podcasts/">Podcasts</a></li>
+                      <!-- <li><a href="/cities/">Cities</a></li> -->
+                      <li><a href="/newsletters/">Newsletters</a></li>
+                    </ul>
+                    <div>
+                      <ul>
+                        <li>
+                          <h4>Get Involved</h4>
+                        </li>
+                        <li><a href="/callforcode/?cm_sp=Developer-_-cfc-2020-_-nav-ov75914">Call for Code Global
+                            Challenge</a></li>
+                      </ul>
+                      <br />
+                      <ul>
+                        <li>
+                          <h4>Workshops</h4>
+                        </li>
+                        <li><a href="/openshift-world-tour/">Build Smart on Kubernetes World Tour</a></li>
+                      </ul>
+                      <br />
+                      <ul>
+                        <li>
+                          <h4>Partners</h4>
+                        </li>
+                        <li><a href="/partner-developer-resources/">Technical resources for partners</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li id='open_source_at_ibm'
+              class=' menu-item menu-item-type-custom menu-item-object-custom menu-item menu-item-type-custom menu-item-object-custom menu-item-has-mega'>
+              <a aria-haspopup="menu" aria-expanded="false" role="menuitem"
+                class="bx--header__menu-item bx--header__menu-title" href="#">Open source at IBM<svg focusable="false"
+                  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="10" height="6"
+                  viewBox="0 0 10 6" aria-hidden="true" class="bx--header__menu-arrow">
+                  <path d="M5 6L0 1 .7.3 5 4.6 9.3.3l.7.7z"></path>
+                </svg></a>
+              <div class="mega-menu bx--header__menu sub-menu" role="menu">
+                <div class="mega-menu-inner">
+                  <div class="code_content__wrap">
+                    <ul>
+                      <li><a href="https://www.ibm.com/opensource/">Home</a></li>
+                      <li><a href="https://www.ibm.com/opensource/community-involvement/">Communities</a></li>
+                      <li><a href="https://www.ibm.com/opensource/enterprise/">Culture</a></li>
+                      <li><a href="https://www.ibm.com/opensource/open-projects/">Open projects</a></li>
+                      <li><a href="https://www.ibm.com/opensource/story/">Our story</a></li>
+                      <li><a href="/exchanges/models/">Model Asset eXchange</a></li>
+                      <li><a href="/exchanges/data/">Data Asset eXchange</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="bx--header__global">
+          <div id="header-search-module" class="GlobalSearch-module--container GlobalSearch-module--hidden"
+            role="search">
+            <label for="search-input" id="search-label" class="GlobalSearch-module--label">Search</label>
+            <form action="https://developer.ibm.com/" method="GET" class="GlobalSearch-module--inputWrapper"
+              role="combobox" aria-owns="search-menu" aria-haspopup="menu" aria-expanded="false">
+              <button tabindex="0" class="GlobalSearch-module--searchButton GlobalSearch-module--search-button--search"
+                type="button" aria-label="Open search">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change:transform"
+                  description="Open search" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M30 28.59L22.45 21A11 11 0 1 0 21 22.45L28.59 30zM5 14a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"></path>
+                </svg>
+              </button>
+              <input type="text" autocomplete="off" tabindex="-1" aria-autocomplete="list" aria-controls="search-menu"
+                aria-activedescendant="menu-item-0" class="GlobalSearch-module--input GlobalSearch-module--hidden"
+                id="search-input-header" placeholder="Search IBM Developer" value="" name="q">
+
+              <button tabindex="-1"
+                class="GlobalSearch-module--searchButton GlobalSearch-module--search-button--close GlobalSearch-module--hidden"
+                type="button" aria-label="Clear search">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change:transform"
+                  description="Clear search" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 32 32" aria-hidden="true">
+                  <path
+                    d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z">
+                  </path>
+                </svg>
+              </button>
+            </form>
+            <ul aria-labelledby="search-label" role="menu" id="search-menu"
+              class="GlobalSearch-module--list GlobalSearch-module--hidden"></ul>
+          </div>
+          <div id="header-login-module" aria-expanded="false"
+            class="GlobalLogin-module--container GlobalLogin-module--hidden" role="login">
+            <button aria-label="Open menu" class="bx--header__action--login bx--header__action" title="Open menu"
+              type="button">
+              <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                <path
+                  d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2zm-6 24.38v-2A3.22 3.22 0 0 1 13 21h6a3.22 3.22 0 0 1 3 3.39v2a11.92 11.92 0 0 1-12 0zm14-1.46v-.61A5.21 5.21 0 0 0 19 19h-6a5.2 5.2 0 0 0-5 5.31v.59a12 12 0 1 1 16 0z">
+                </path>
+                <path d="M16 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"></path>
               </svg>
             </button>
             <ul id="ibm-signin-minimenu-container" role="menu" aria-label="Profile" class="bx--header__submenu">
-              <li class="menu-item"><a class="bx--header__menu-item" role="menuitem" href="/profile">My Dashboard</a></li>
-							<li class="menu-item"><a class="bx--header__menu-item" role="menuitem" href="https://myibm.ibm.com/?lnk=mmi" tabindex="0">My IBM</a></li>
-							<li class="menu-item"><a id="bx--header-signinout" class="bx--header__menu-item" role="menuitem" rel="nofollow" href="https://developer.ibm.com/sso/login?d=https%3A%2F%2Fdeveloper.ibm.com%2Ffeedback%2F&lang=us_EN" tabindex="-1">Sign In</a></li>
-						</ul>
-                  </div>
-      </div>
-    </header>
-  </div>
-</div>
-<div class="side-nav-click-to-close side-nav-click-to-close__closed" id="code--side-nav-cover"></div>
-<!-- Navigation wrapper for accessibility -->
-<nav class="bx--side-nav__navigation bx--side-nav bx--side-nav--expanded bx--side-nav--website bx--side-nav--website--dark bx--side-nav--ux" aria-label="Side navigation" id="code--side-nav-old">
-<!--nav class="bx--side-nav__navigation bx--side-nav bx--side-nav--ux bx--side-nav--website--dark" role="navigation" aria-label="Navigation" id="code--side-nav"-->
-  <!-- <header class="bx--side-nav__header"></header> -->
-  <!-- Renders all of our navigation items -->
-  <ul class="bx--side-nav__items" id="developerNavTriggersMobile"><li data-level="0" class='bx--side-nav__item '><a href="/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Home</span></a></li>
-<hr class="bx--side-nav__divider">
-<li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true" class="noclick bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Topics</span>
-            </button>
-<ul class="bx--side-nav__menu" role="menu">
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Technologies</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/analytics/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Analytics</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/artificial-intelligence/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Artificial Intelligence</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/containers/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Containers</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Languages</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/cobol/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">COBOL</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/java/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Java</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/php/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">PHP</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Development Practices</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/devpractices/devops/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">DevOps</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/devpractices/open-source-development/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Open-source development</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/devpractices/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Architectures & Deployment models</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/cloud/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Cloud</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/edge-computing/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Edge computing</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/microservices/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Microservices</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Solutions</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/solutions/application-modernization/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">App Modernization</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/solutions/security/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Security</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/solutions/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Industries</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/finance/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Finance</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/gaming/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Gaming</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/retail/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Retail</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-</ul>
-</li>
-<hr class="bx--side-nav__divider">
-<li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true" class="noclick bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Products & Services</span>
-            </button>
-<ul class="bx--side-nav__menu" role="menu">
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Open Source</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/kubernetes/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Kubernetes</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/node-red/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Node-RED</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/istio/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Istio</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/tensorflow/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">TensorFlow</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/open-liberty/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Open Liberty</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">IBM Product & Services</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/cloud-pak-for-data/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">IBM Cloud Pak for Data</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/redhat-openshift-ibm-cloud/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Red Hat OpenShift on IBM Cloud</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/sterling/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">IBM Sterling</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/components/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
-	</ul>
-</li>
-</ul>
-</li>
-<hr class="bx--side-nav__divider">
-<li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true" class="noclick bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Community</span>
-            </button>
-<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/community/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Home</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/blogs/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Blog posts</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/events/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Events</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/conferences/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Digital conferences</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/videos/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Videos</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/podcasts/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Podcasts</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/newsletters/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Newsletters</span></a></li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Get Involved</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/callforcode/?cm_sp=Developer-_-cfc-2021-_-nav-ov75914" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Call for Code Global Challenge</span></a></li>
-	</ul>
-</li>
-<li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false" class="bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Workshops</span>
-              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path></svg>
-              </div>
-            </button>
-	<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/openshift-world-tour/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Build Smart on Kubernetes World Tour</span></a></li>
-	</ul>
-</li>
-</ul>
-</li>
-<hr class="bx--side-nav__divider">
-<li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true" class="noclick bx--side-nav__submenu" type="button">
-              <span class="bx--side-nav__submenu-title">Opensource at IBM</span>
-            </button>
-<ul class="bx--side-nav__menu" role="menu">
-<li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Home</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/community-involvement/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Communities</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/enterprise/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Culture</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/open-projects/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Open projects</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/story/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Our story</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/exchanges/models/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Model asset exchange</span></a></li>
-<li data-level="2" class='bx--side-nav__menu-item'><a href="/exchanges/data/" class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Data asset exchange</span></a></li>
-</ul>
-</li>
-<hr class="bx--side-nav__divider">
-</ul>  <!-- Renders the button to collapse or expand the side nav -->
-  <!-- <footer class="bx--side-nav__footer"></footer> -->
-</nav>
-
-	<!-- totally new layout -->
-<div class="ibm-developer" style="display:none;">
-  <div class="bx--grid">
-    <div class="bx--row">
-      <div class="bx--col-lg-12">max-content width</div>
-      <div class="bx--col-lg-12">developer.ibm.com</div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- begin new layout -->
-<div id="content" class="container nosb">
-    <div class="page_content">
-    <div class="page_content_wrap">
-<!-- begin new layout -->
-<div class="code_postcontent">
-	
-	<section class="wp-content wp-static-content">
-		<!-- begin main body content -->
-		<!-- Feedback -->
-<!-- PAGE HEADER -->
-<div class="page-header cpt-hero color-bg-gray-100" style="background: transparent url(https://dw1.s81c.com/developer-static-pages/default/en/feedback/images/community.jpg) no-repeat 0 0 / cover;">
-  <div class="cpt-hero__wrap">
-    <div class="bx--grid">
-      <div class="bx--row">
-        <div class="bx--offset-lg-2 bx--col-lg-8 bx--offset-md-1 bx--col-md-6">
-          <div class="bx--row">
-            <div class="bx--col-md-7 bx--col-lg-7 herotext">
-              <p class="cpt-byline__posttype"></p>
-               <h1 class="cpt-byline__title">Site feedback and FAQ</h1>
-              <h2 class="cpt-byline__subtitle">You have questions. We have answers.</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- PAGE SECTION -->
-<div class="page-section color-bg-white">
-  <div class="bx--grid">
-    <div class="bx--row">
-      <div class="bx--offset-lg-2 bx--col-lg-8 bx--offset-md-1 bx--col-md-6">
-        <div class="bx--row">
-          <div class="bx--col-lg-12">
-<p>This page is designed to help you find answers for questions related to the IBM Developer website and related initiatives. For product support, check the product page for appropriate channels. For questions about technology,
-              programming methods, and other topics relevant to the wider developer community, see <a href="https://www.ibm.com/mysupport/s/forumshome?language=en_US" rel="noopener noreferrer" target="_blank">IBM Support</a>.</p>
-            <br>
-            <h4>Site feedback</h4>
-            <p>For site-related feedback not addressed in the FAQ, click the <strong>Site Feedback</strong> tab at the upper right of any IBM Developer page. A member of the team will investigate the issue.</p>
-            <p><strong>Note to IBM employees</strong>: If you have an administrative or otherwise internal-facing question, post to the internal #IBMDeveloper Slack channel.</p>
-            <br>
-            <h4>Frequently asked questions</h4>
-            <p>Are you wondering about the evolution of IBM’s developer-related code, content, and community? Check out this FAQ list to learn more</p>
-            <ul data-accordion class="bx--accordion">
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">What is IBM Developer?</div>
-                </button>
-
-                <div id="pane1" class="bx--accordion__content">
-                   <p>IBM Developer is a global community of coders and developer advocates and digital resources focused on helping developers learn, build, and connect. We provide the resources, tools, and community that inspire you to further your tech skills. With technical articles and tutorials, step-by-step learning paths, instructional videos, open source code samples, and online conferences, we help developers tap into the collective, innovative power of open collaboration and stay up to date with ever evolving skills.</p>  
-                </div>
+              <li class="menu-item"><a class="bx--header__menu-item" role="menuitem" href="/profile">My Dashboard</a>
               </li>
-              
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">What are the key topic areas for IBM Developer?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-   <p>IBM Developer provides rich, technical content on technologies, programming languages, development practices, and architecture &#038; deployment models.  Our most popular technologies include <i>artificial intelligence</i> and <i>containers</i>. Our most popular programming language is <i>Java</i>.  Our most popular development practice is <i>DevOps</i>.  And, our most popular architecture and deployment model is <i>microservices</i>.</p>
-<!-- <p>Refer to our hub pages for a list of all topics found on IBM Developer.</p>
-<ul class="bx--list--unordered">
-<li><strong><a href="/technologies/">Technologies</a></strong></li>
-<li><strong><a href="/languages/">Languages</a></strong></li>
-<li><strong><a href="/devpractices/">Development practices</a></strong></li>
-<li><strong><a href="/depmodels/">Architecture & deployment models</a></strong></li>
-<li><strong><a href="/solutions/'>Solutions</a></strong></li>
-<li><strong><a href="/components/">Products & services</a></strong></li>
-<li><strong><a href="/apis/">IBM API hub</a></strong></li>
-</ul> -->
-  <p>Our <a href="/sitemap/">site map</a> gives a high level overview of IBM Developer content and topics.</p> 
-  </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">What other languages does IBM Developer support?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-  <p>IBM Developer has two native language sites:  <a href="/es/" target="_blank" rel="noopener noreferrer">Spanish</a> and <a href="/br/" target="_blank" rel="noopener noreferrer">Brazilian Portuguese</a>. These sites contain translations of our most popular English content, as well as content developed by local SMEs.</p>
-                </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                <div class="bx--accordion__title">What kinds of content can I find on IBM Developer?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-  <p>Our focus is on digital assets that are based on open source code and deployable to the cloud.  The most popular asset types are:</p>
-<ul class="bx--list--unordered">
-<li><strong><a href="/learningpaths/">Learning paths</a></strong><p>Learning paths are curated lists of content in a recommended progression to help developers learn about a technology topic or process. Learning paths contain short descriptions with links to a mix of IBM Developer assets (such as videos, blogs, tutorials, patterns and labs) as well as other IBM or non-IBM resources (such as open source assets). </p></li>
-<li><strong><a href="/tutorials/">Tutorials</a></strong><p>Complete step-by-step goal-focused learning that shows you how to complete one or more tasks or use cases. Our tutorials differ from code patterns in that they are usually for introductory education and granular technical tasks, while patterns are for more advanced, multi-branched coding tasks.</p></li>
-<li><strong><a href="/articles/">Articles</a></strong><p>Articles facilitate and reinforce new skills by explaining a concept in detail and showing examples. Articles are similar to tutorials, but they usually explain more conceptual information rather than provide procedural or task-focused content.</p></li>
-<li><strong><a href="/patterns/">Code patterns</a></strong><p>Code patterns provide a 360-degree view of code that solves a specific problem. In addition to providing direct access to the code, patterns include contextual overviews, architecture diagrams, process flows, demos, technology components, and related blog posts.</p></li>
-<li><strong><a href="/videos/">Videos</a></strong><p>From expert tech talks to live streams to replays of live tech talks or events, videos let you watch developers demonstrate or talk about technologies, products, or services.</p></li></ul>               </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">Why are some content assets listed as &#8220;Archived&#8221;?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>Our team continually reviews the content on IBM Developer to ensure that it is still relevant, accurate, and refers to a product or technology that is still available in some form.  If any of these criteria are not met, we may decide to archive the asset.</p><p>Archived assets remain available on the site, but are no longer being updated or maintained. The content is provided “as is.” Please be aware that given the rapid evolution of technology, some content, steps, or illustrations may have changed in archived content.</p><p>At some point, archived content might be retired and removed from IBM Developer.  When we retire content, we add a redirect to a suitable replacement asset or to a list of related assets.</p>
-                </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">How can I follow IBM Developer on social media?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                    <p>You can follow IBM Developer on <a href="https://twitter.com/IBMDeveloper/" target="_blank" rel="noopener noreferrer nofollow">Twitter</a>, <a href="https://www.facebook.com/IBMDeveloper/" target="_blank" rel="noopener noreferrer nofollow">Facebook</a>, or <a href="https://www.linkedin.com/showcase/ibmdeveloper" target="_blank" rel="noopener noreferrer nofollow">LinkedIn</a>, or you can subscribe to our <a href="https://www.youtube.com/channel/UCUm6InQvGI9-6vo1teGWINA" target="_blank" rel="noopener noreferrer nofollow">YouTube channel</a>.</p>
-              </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">How can I get IBM Developer content updates sent by email?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>Subscribe to any or all of our <a href="/newsletters/">newsletters</a> and get the latest content, events, and offers delivered right to your inbox.
-</p> </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                    <div class="bx--accordion__title">How can I provide feedback?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>You can submit feedback through the site feedback link found in the right hand area of each page.</p>
-                </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">Can I link to or reference IBM Developer content from my personal blog or another web site?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>We welcome individuals referencing or linking back to IBM Developer content from their personal blog or other web site.  Please follow these best practices:</p>
-<ul class="bx--list--unordered">
-<li>Summarize the content (do not replicate).  This is an SEO best practice.  Google devalues sites that simply copy content verbatim from the original source.</li>
-<li>Add an attribution link back to IBM Developer source.  This ensures that your users find the latest version of the content, and you will be alerted via 404s if the content has been removed for any reason.. We suggest the following:<br /><br />
-<em>&#8220;You can view the original (blog/article/tutorial/etc) as published on IBM Developer for the latest and most up to date version of the content.&#8221;</em> </li>
-</ul> </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">Why should I set up a profile with IBM Developer?
-                  </div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>Setting up a profile with IBM Developer allows you to:</p>
-<ul class="bx--list--unordered"><li>Track your progress through learning paths</li>
-<li>Follow topics that interest you and browse your personalized feed</li>
-<li>Keep track of your upcoming events and conferences</li>
-<li>Save your favorite tutorials, videos, APIs, and more to access any time</li>
-<li>Manage your newsletter subscriptions and notification preferences</li></ul>
-  </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                  <div class="bx--accordion__title">How do I set up and access an IBM Developer profile?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                 <p>
-From any IBM Developer page, click on the profile icon found in the upper right hand corner.  Select &#8220;sign in&#8221; and from the overlay, select &#8220;Create an IBMid.&#8221;  After setting up your IBMid, and validating your email, you are prompted to enter an IBM Developer profile display name.</p>
-<p>You can access and customize your profile by clicking on the profile icon and selecting &#8220;My dashboard.&#8221;</p>
-  </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">How do I sign into IBM Developer?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>From any IBM Developer page, click on the profile icon found in the upper right hand corner. &#8220;Sign in&#8221; is one of the action options in the dropdown.  Enter your IBM ID email and password. </p>
-               </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">What if I forget my IBM Developer user ID or want to reset my password?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-                  <p>The sign in overlay includes a link for help if you have forgotten or want to reset your password</p>
-  </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">Who do I contact if I have a problem logging in to IBM Developer or have problems with my IBM Cloud account?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-<p>For all other problems, contact the <a href="https://www.ibm.com/ibmid/myibm/help/us/helpdesk.html">IBMid worldwide help desk</a>.</p>
-</div>              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">What happened to IBM developerWorks?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-<p>IBM Developer was built from two legacy sites: IBM developerWorks and IBM Code.  IBM developerWorks&#8217; mission covered both open source technologies and IBM products.  IBM Code provided code patterns that helped developers solve specific problems or get started with new technologies and cloud services.</p>
-<p>In 2018, IBM Developer was launched as IBM&#8217;s developer resource site focusing on open source, cloud-based technologies and services.  Relevant content from IBM developerWorks was merged with IBM Code and the resulting content collection was rebranded as IBM Developer.</p>
-<p>In 2021, we sunset the IBM developerWorks site to focus completely on the IBM Developer mission.</p>                </div>
-              </li>
-              <li data-accordion-item class="bx--accordion__item">
-                <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
-                  </svg>
-                 <div class="bx--accordion__title">Where can I find IBM product information or support?</div>
-                </button>
-                <div id="pane1" class="bx--accordion__content">
-<p>Use these resources to find information related to products like Lotus, Rational, Tivoli, or other older brands or to find similar information that was previously published on developerWorks:<p>
-<ul class="bx--list--unordered">
-<li><a href="https://www.ibm.com/docs/en" target="_blank" rel="noopener noreferrer">IBM Documentation</a></li><li><a href="https://help.hcltechsw.com/" target="_blank" rel="noopener noreferrer">Lotus Product documentation</a> (*Divested to HCL Technologies June 2019)</li><li><a href="https://www.ibm.com/support/home/" target="_blank" rel="noopener noreferrer">IBM Support</a></li><li><a href="https://www.ibm.com/support/fixcentral/" target="_blank" rel="noopener noreferrer">IBM Fix Central</a></li><li><a href="https://www.ibm.com/software/passportadvantage/pao.html" target="_blank" rel="noopener noreferrer">Passport Advantage Online (PAO)</a></li><li><a href="https://www.ibm.com/training/" target="_blank" rel="noopener noreferrer">IBM Training</a></li><li><a href="https://community.ibm.com/community/user/home" target="_blank" rel="noopener noreferrer">IBM Community</a></li></ul><br /><br />
-</li></ul>                </div>
-              </li>
+              <li class="menu-item"><a class="bx--header__menu-item" role="menuitem"
+                  href="https://myibm.ibm.com/?lnk=mmi" tabindex="0">My IBM</a></li>
+              <li class="menu-item"><a id="bx--header-signinout" class="bx--header__menu-item" role="menuitem"
+                  rel="nofollow"
+                  href="https://developer.ibm.com/sso/login?d=https%3A%2F%2Fdeveloper.ibm.com%2Ffeedback%2F&lang=us_EN"
+                  tabindex="-1">Sign In</a></li>
             </ul>
           </div>
         </div>
+      </header>
+    </div>
+  </div>
+  <div class="side-nav-click-to-close side-nav-click-to-close__closed" id="code--side-nav-cover"></div>
+  <!-- Navigation wrapper for accessibility -->
+  <nav
+    class="bx--side-nav__navigation bx--side-nav bx--side-nav--expanded bx--side-nav--website bx--side-nav--website--dark bx--side-nav--ux"
+    aria-label="Side navigation" id="code--side-nav-old">
+    <!--nav class="bx--side-nav__navigation bx--side-nav bx--side-nav--ux bx--side-nav--website--dark" role="navigation" aria-label="Navigation" id="code--side-nav"-->
+    <!-- <header class="bx--side-nav__header"></header> -->
+    <!-- Renders all of our navigation items -->
+    <ul class="bx--side-nav__items" id="developerNavTriggersMobile">
+      <li data-level="0" class='bx--side-nav__item '><a href="/" class="bx--side-nav__link" role="menuitem"><span
+            class="bx--side-nav__link-text">Home</span></a></li>
+      <hr class="bx--side-nav__divider">
+      <li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true"
+          class="noclick bx--side-nav__submenu" type="button">
+          <span class="bx--side-nav__submenu-title">Topics</span>
+        </button>
+        <ul class="bx--side-nav__menu" role="menu">
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Technologies</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/analytics/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Analytics</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/artificial-intelligence/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Artificial
+                    Intelligence</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/containers/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Containers</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/technologies/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Languages</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/cobol/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">COBOL</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/java/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">Java</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/php/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">PHP</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/languages/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Development Practices</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/devpractices/devops/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">DevOps</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/devpractices/open-source-development/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Open-source
+                    development</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/devpractices/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Architectures & Deployment models</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/cloud/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">Cloud</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/edge-computing/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Edge
+                    computing</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/microservices/"
+                  class="bx--side-nav__link" role="menuitem"><span
+                    class="bx--side-nav__link-text">Microservices</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/depmodels/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Solutions</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/solutions/application-modernization/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">App
+                    Modernization</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/solutions/security/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Security</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/solutions/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Industries</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/finance/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Finance</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/gaming/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Gaming</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/retail/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Retail</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/industries/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <hr class="bx--side-nav__divider">
+      <li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true"
+          class="noclick bx--side-nav__submenu" type="button">
+          <span class="bx--side-nav__submenu-title">Products & Services</span>
+        </button>
+        <ul class="bx--side-nav__menu" role="menu">
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Open Source</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/kubernetes/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Kubernetes</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/node-red/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Node-RED</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/istio/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">Istio</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/tensorflow/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">TensorFlow</span></a>
+              </li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/open-liberty/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Open
+                    Liberty</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">IBM Product & Services</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/cloud-pak-for-data/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">IBM Cloud Pak for
+                    Data</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/redhat-openshift-ibm-cloud/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Red Hat OpenShift on
+                    IBM Cloud</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/sterling/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">IBM
+                    Sterling</span></a></li>
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/components/" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">See all</span></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <hr class="bx--side-nav__divider">
+      <li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true"
+          class="noclick bx--side-nav__submenu" type="button">
+          <span class="bx--side-nav__submenu-title">Community</span>
+        </button>
+        <ul class="bx--side-nav__menu" role="menu">
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/community/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Home</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/blogs/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Blog posts</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/events/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Events</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/conferences/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Digital conferences</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/videos/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Videos</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/podcasts/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Podcasts</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/newsletters/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Newsletters</span></a></li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Get Involved</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a
+                  href="/callforcode/?cm_sp=Developer-_-cfc-2021-_-nav-ov75914" class="bx--side-nav__link"
+                  role="menuitem"><span class="bx--side-nav__link-text">Call for Code Global Challenge</span></a></li>
+            </ul>
+          </li>
+          <li data-level="1" class='bx--side-nav__menu-item'><button aria-haspopup="true" aria-expanded="false"
+              class="bx--side-nav__submenu" type="button">
+              <span class="bx--side-nav__submenu-title">Workshops</span>
+              <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                  <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul class="bx--side-nav__menu" role="menu">
+              <li data-level="2" class='bx--side-nav__menu-item'><a href="/openshift-world-tour/"
+                  class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Build Smart on
+                    Kubernetes World Tour</span></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <hr class="bx--side-nav__divider">
+      <li data-level="0" class='megasection bx--side-nav__item'><button aria-haspopup="true" aria-expanded="true"
+          class="noclick bx--side-nav__submenu" type="button">
+          <span class="bx--side-nav__submenu-title">Opensource at IBM</span>
+        </button>
+        <ul class="bx--side-nav__menu" role="menu">
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/"
+              class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Home</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a
+              href="https://www.ibm.com/opensource/community-involvement/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Communities</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/enterprise/"
+              class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Culture</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/open-projects/"
+              class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Open projects</span></a>
+          </li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="https://www.ibm.com/opensource/story/"
+              class="bx--side-nav__link" role="menuitem"><span class="bx--side-nav__link-text">Our story</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/exchanges/models/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Model asset exchange</span></a></li>
+          <li data-level="2" class='bx--side-nav__menu-item'><a href="/exchanges/data/" class="bx--side-nav__link"
+              role="menuitem"><span class="bx--side-nav__link-text">Data asset exchange</span></a></li>
+        </ul>
+      </li>
+      <hr class="bx--side-nav__divider">
+    </ul> <!-- Renders the button to collapse or expand the side nav -->
+    <!-- <footer class="bx--side-nav__footer"></footer> -->
+  </nav>
+
+  <!-- totally new layout -->
+  <div class="ibm-developer" style="display:none;">
+    <div class="bx--grid">
+      <div class="bx--row">
+        <div class="bx--col-lg-12">max-content width</div>
+        <div class="bx--col-lg-12">developer.ibm.com</div>
       </div>
     </div>
   </div>
-</div>
 
-	</section>
-	
-</div>
 
-</div>
-</div>
-</div>
 
-<div class="container_footer">
-	<footer role="contentinfo" aria-label="IBM Developer Footer">
-    		<!-- developer footer here -->
-		<div id="code-footer"class="code-footer">
-      <div class="ibm-logo">
-        <a href="//www.ibm.com">
-          <svg class="Footer-module--logo--3otJM" width="81" height="32" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M0 32h15.689v-2.038H0zM0 27.721h15.689v-2.038H0zM4.483 23.442h6.724v-2.037H4.483zM4.483 19.164h6.724v-2.038H4.483zM4.483 14.885h6.724v-2.037H4.483zM4.482 10.606h6.724V8.568H4.482zM0 6.327h15.689V4.29H0zM0 2.049h15.689V.011H0zM17.93 29.963V32h16.504a8.521 8.521 0 0 0 5.54-2.037H17.93zM17.93 25.683v2.038h23.914a8.535 8.535 0 0 0 .85-2.038H17.93zM22.412 23.442h6.724v-2.037h-6.724zM40.124 17.126H22.412v2.038H41.77a8.62 8.62 0 0 0-1.645-2.038M22.413 12.848v2.036h17.786a8.612 8.612 0 0 0 1.644-2.037h-19.43zM42.693 6.327a8.447 8.447 0 0 0-.85-2.037H17.93v2.037h24.763zM39.974 2.049a8.521 8.521 0 0 0-5.54-2.037H17.93v2.037h22.044zM22.412 10.606h6.724V8.568h-6.724zM35.453 10.606h7.29a8.603 8.603 0 0 0 .248-2.038h-7.538v2.038zM35.453 21.405v2.037h7.538c0-.703-.09-1.384-.248-2.037h-7.29zM57.457 0H44.825v2.038h13.34zM44.826 32h11.21v-2.038h-11.21zM44.826 27.72h11.21v-2.038h-11.21zM49.309 23.439h6.727v-2.038h-6.727zM49.309 19.159h6.727v-2.038h-6.727zM69.488 32h11.21v-2.038h-11.21zM69.488 27.72h11.21v-2.038h-11.21zM69.488 23.439h6.726v-2.038h-6.726zM69.487 19.159h6.726v-2.038h-6.726zM69.488 14.879h6.726V12.84H63.606l-.707 2.038h5.903l.686-1.94zM61.916 12.84H49.31v2.039h6.726v-1.94l.686 1.94h5.903zM76.213 8.56H65.091l-.707 2.038h11.83zM68.06 0l-.706 2.038h13.344V0zM62.757 32l.72-2.038h-1.432zM61.254 27.72h3.015l.72-2.038h-4.455zM59.743 23.44h6.037l.72-2.039h-7.476zM58.232 19.159h9.06l.719-2.038h-10.5zM49.309 10.598h11.83l-.707-2.038H49.309zM65.868 6.318h14.83V4.28H66.576zM58.947 4.28H44.826v2.038h14.828z"></path></g></svg>
-        </a>
-        <div class="slogan">
-          <a href="https://developer.ibm.com">
-            <span>
-              <span>Build</span>
-              <span>Smart<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><polygon points="24.59 16.59 17 24.17 17 2 15 2 15 24.17 7.41 16.59 6 18 16 28 26 18 24.59 16.59"></polygon><title>Arrow down</title></svg></span>
-            </span>
-            <span>
-              <span>Build</span>
-              <span>Secure<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;"><polygon points="16 4 6 14 7.41 15.41 15 7.83 15 30 17 30 17 7.83 24.59 15.41 26 14 16 4"></polygon><title>Arrow up</title></svg></span>
-            </span>
-          </a>
+  <!-- begin new layout -->
+  <div id="content" class="container nosb">
+    <div class="page_content">
+      <div class="page_content_wrap">
+        <!-- begin new layout -->
+        <div class="code_postcontent">
+
+          <section class="wp-content wp-static-content">
+            <!-- begin main body content -->
+            <!-- Feedback -->
+            <!-- PAGE HEADER -->
+            <div class="page-header cpt-hero color-bg-gray-100"
+              style="background: transparent url(https://dw1.s81c.com/developer-static-pages/default/en/feedback/images/community.jpg) no-repeat 0 0 / cover;">
+              <div class="cpt-hero__wrap">
+                <div class="bx--grid">
+                  <div class="bx--row">
+                    <div class="bx--offset-lg-2 bx--col-lg-8 bx--offset-md-1 bx--col-md-6">
+                      <div class="bx--row">
+                        <div class="bx--col-md-7 bx--col-lg-7 herotext">
+                          <p class="cpt-byline__posttype"></p>
+                          <h1 class="cpt-byline__title">Technology Sandbox feedback and FAQ</h1>
+                          <h2 class="cpt-byline__subtitle">You have questions. We have answers.</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- PAGE SECTION -->
+            <div class="page-section color-bg-white">
+              <div class="bx--grid">
+                <div class="bx--row">
+                  <div class="bx--offset-lg-2 bx--col-lg-8 bx--offset-md-1 bx--col-md-6">
+                    <div class="bx--row">
+                      <div class="bx--col-lg-12">
+                        <p>This page is designed to help you find answers for questions related to the Technology
+                          Sandbox product and related information. </p>
+                        <br>
+                        <h4> Issues and feedback</h4>
+                        <p>For product related issues not addressed in the FAQ, click <a
+                            href="https://github.com/IBM/Technology-Sandbox-Support/issues/new/choose"
+                            target="blank">here</a> </p>
+                        <br>
+                        <h4>Frequently asked questions</h4>
+                        <!-- <p>Are you wondering about the evolution of IBM’s developer-related code, content, and community? Check out this FAQ list to learn more</p> -->
+                        <ul data-accordion class="bx--accordion">
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">Which browsers are supported?</div>
+                            </button>
+
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>You cannot use Safari to access applications in the IBM Developer Technology Sandbox.
+                                The sandbox works best with Chrome and Firefox. We strongly recommend that you use these
+                                browsers for the best experience.</p>
+                            </div>
+                          </li>
+
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">While using IBM Developer Technology Sandbox, I get an
+                                error message 'Cannot create workspace'.</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>This error indicates a temporary issue or the non-availability of resources while
+                                creating a workspace. Refresh the page and try again..</p>
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">Can I  increase the timeout period of the workspace?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>Each workspace session is limited to 4 hours. Remember to save your work to a Github repo.</p>
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">Can I work on more than one workspace at the same time?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>Each user can use only one workspace at a time.</p>    
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">Can I personalize the IBM Developer Technology Sandbox workspace?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>We do not support personalization or customization of workspaces at this time.</p>    
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">What do I do if I do not see any activity in the terminal?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>The background processes in the build, configure, and launch steps can sometimes take up to a minute to complete due to network issues. If you see a certain step taking longer than expected, stop it by pressing Ctrl + C for Windows users and Cmd + C for Mac users on the terminal, and then retry the step.</p>    
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">What are the languages supported by IBM Developer Technology Sandbox?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>No, currently IBM Developer Technology Sandbox supports applications built using Node.js, React, Python and R.</p>    
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">What type of applications are currently enabled in the IBM Developer Technology Sandbox?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>Currently, IBM Developer Technology Sandbox supports applications built using API products, some IBM Cloud services, and some IBM Watson services. </p>    
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">Do I need an IBM Cloud account to work with the applications?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>You will need an IBM Cloud account when running applications that are built using IBM Cloud services. Running applications that are built using API products will not require you to have an IBM Cloud account.</p>    
+                              <p>You can sign up for a free IBM Cloud account here: <a href="https://cloud.ibm.com/registration/trial?cm_sp=ibmdev--developer-sandbox--cloudreg" target="blank">https://cloud.ibm.com/registration/trial</a> </p>
+                              <p>Certain applications require a Data account to be run. You can sign up for a Data account here: <a href="https://dataplatform.cloud.ibm.com/registration/stepone?context=cpdaas&apps=all&cm_sp=ibmdev--developer-sandbox--cloudreg" target="blank">https://dataplatform.cloud.ibm.com/registration/stepone</a></p>
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">I have run out of my allocated Capacity Unit Hours? What do I do?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>If you are subscribed to a Lite plan and have run out of your CUH allocation, you will need to wait until the next month for them to be replenished. You can upgrade to a paid plan for additional capacity hours.  You can check your usage here: <a href="https://cloud.ibm.com/billing" target="blank">https://cloud.ibm.com/billing </a></p>    
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">How do I save my work? How do I export the sample application code?</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>Use the Git feature in the IBM Developer Technology Sandbox to push the pre-built application code and any modifications that you've made to your GitHub repository.  To publish the code to a GitHub repo follow these steps:</p>    
+                              <p>1. Open a Terminal in the theia-ide*** container. 
+                                Terminal->Open Terminal in specific container and select the theia-ide*** container  <br/>
+                                <br>
+                                 2. Make sure you are in the projects folder 
+                                  cd /projects<br/>
+                                  <br>
+                                 3. Clone the repository to push the code 
+                                    git clone  &ltgithub repo&gt <br>
+                                    Or, if you need to clone a particular branch from the repo 
+                                    git -b &ltbranch&gt clone &ltgithub repo&gt <br/>
+                                    You might be prompted for a username and password for the repo, if the repo is private.<br />
+                                    <br>
+                                 4. Copy the sample app code into the clone repo. 
+                                    cp -a &ltsample app&gt/. &ltrepo name&gt/ <br>
+                                    <br>
+                                 5. Switch to the repo folder <br>
+                                    cd &ltrepo name&gt <br>
+                                    <br>
+                                 6. Skip unnecessary files from being pushed to repo : <br>
+                                 touch .gitignore && echo "node_modules/" >> .gitignore; echo ".git" >> .gitignore<br>
+                                 <br>
+                                 7. Add all the changes to git: <br>
+                                  git add *<br>
+                                  <br>
+
+                                  8. Commit all the changes: <br>
+                                  git commit -m "Commit Message"<br>
+                                  <br>
+                                  
+                                  
+                                  9. Push all code to the remote repo: <br>
+                                  git remote add origin &ltrepo name&gt<br>
+                                  git push -u origin &ltbranch&gt <br>
+
+                              </p>
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">While performing the Install dependencies step, I encountered an error: “ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'”</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>This error is displayed if the source repo has not been downloaded. Please click on the ‘Get Code’ action before attempting to install dependencies. </p>
+                            </div>
+                          </li>
+                          <li data-accordion-item class="bx--accordion__item">
+                            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;"
+                                xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16"
+                                viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"></path>
+                              </svg>
+                              <div class="bx--accordion__title">While performing the git clone step, I encountered an error: “fatal: BUG: initial ref transaction called with existing refs”</div>
+                            </button>
+                            <div id="pane1" class="bx--accordion__content">
+                              <p>This error is displayed in the terminal when network issues are encountered. Please click on the ‘Get Code’ action again.</p>    
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
+
+        </section>
+
       </div>
-      <div class="footer-links">
-        <div class="bx--grid">
-					<div class="bx--row">
-            <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
-              <ul>
-                <li class="heading">IBM Developer</li>
-								<li><a href="/about/?lang=en">About</a></li>
-                      <li><a href="/feedback/">FAQ</a></li>
-                      <li><a href="/terms/third-party-notice/">Third-party notice</a></li>							</ul>
-						</div>
-            <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
-							<ul class="tr">
-                <li class="heading">Follow Us</li>
-                <li><a href="https://twitter.com/IBMDeveloper/">Twitter</a></li>
-                <li><a href="https://www.linkedin.com/showcase/developerworks/">LinkedIn</a></li>
-                <li><a href="https://www.facebook.com/IBMDeveloper/">Facebook</a></li>
-                <li><a href="https://www.youtube.com/channel/UCUm6InQvGI9-6vo1teGWINA/">YouTube</a></li>							</ul>
-						</div>
-            <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
-							<ul>
-								<li class="heading">Explore</li>
-								<li><a href="/newsletters/">Newsletters</a></li>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="container_footer">
+    <footer role="contentinfo" aria-label="IBM Developer Footer">
+      <!-- developer footer here -->
+      <div id="code-footer" class="code-footer">
+        <div class="ibm-logo">
+          <a href="//www.ibm.com">
+            <svg class="Footer-module--logo--3otJM" width="81" height="32" xmlns="http://www.w3.org/2000/svg">
+              <g fill-rule="evenodd">
+                <path
+                  d="M0 32h15.689v-2.038H0zM0 27.721h15.689v-2.038H0zM4.483 23.442h6.724v-2.037H4.483zM4.483 19.164h6.724v-2.038H4.483zM4.483 14.885h6.724v-2.037H4.483zM4.482 10.606h6.724V8.568H4.482zM0 6.327h15.689V4.29H0zM0 2.049h15.689V.011H0zM17.93 29.963V32h16.504a8.521 8.521 0 0 0 5.54-2.037H17.93zM17.93 25.683v2.038h23.914a8.535 8.535 0 0 0 .85-2.038H17.93zM22.412 23.442h6.724v-2.037h-6.724zM40.124 17.126H22.412v2.038H41.77a8.62 8.62 0 0 0-1.645-2.038M22.413 12.848v2.036h17.786a8.612 8.612 0 0 0 1.644-2.037h-19.43zM42.693 6.327a8.447 8.447 0 0 0-.85-2.037H17.93v2.037h24.763zM39.974 2.049a8.521 8.521 0 0 0-5.54-2.037H17.93v2.037h22.044zM22.412 10.606h6.724V8.568h-6.724zM35.453 10.606h7.29a8.603 8.603 0 0 0 .248-2.038h-7.538v2.038zM35.453 21.405v2.037h7.538c0-.703-.09-1.384-.248-2.037h-7.29zM57.457 0H44.825v2.038h13.34zM44.826 32h11.21v-2.038h-11.21zM44.826 27.72h11.21v-2.038h-11.21zM49.309 23.439h6.727v-2.038h-6.727zM49.309 19.159h6.727v-2.038h-6.727zM69.488 32h11.21v-2.038h-11.21zM69.488 27.72h11.21v-2.038h-11.21zM69.488 23.439h6.726v-2.038h-6.726zM69.487 19.159h6.726v-2.038h-6.726zM69.488 14.879h6.726V12.84H63.606l-.707 2.038h5.903l.686-1.94zM61.916 12.84H49.31v2.039h6.726v-1.94l.686 1.94h5.903zM76.213 8.56H65.091l-.707 2.038h11.83zM68.06 0l-.706 2.038h13.344V0zM62.757 32l.72-2.038h-1.432zM61.254 27.72h3.015l.72-2.038h-4.455zM59.743 23.44h6.037l.72-2.039h-7.476zM58.232 19.159h9.06l.719-2.038h-10.5zM49.309 10.598h11.83l-.707-2.038H49.309zM65.868 6.318h14.83V4.28H66.576zM58.947 4.28H44.826v2.038h14.828z">
+                </path>
+              </g>
+            </svg>
+          </a>
+          <div class="slogan">
+            <a href="https://developer.ibm.com">
+              <span>
+                <span>Build</span>
+                <span>Smart<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+                    width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                    <polygon points="24.59 16.59 17 24.17 17 2 15 2 15 24.17 7.41 16.59 6 18 16 28 26 18 24.59 16.59">
+                    </polygon>
+                    <title>Arrow down</title>
+                  </svg></span>
+              </span>
+              <span>
+                <span>Build</span>
+                <span>Secure<svg focusable="false" preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"
+                    style="will-change: transform;">
+                    <polygon points="16 4 6 14 7.41 15.41 15 7.83 15 30 17 30 17 7.83 24.59 15.41 26 14 16 4"></polygon>
+                    <title>Arrow up</title>
+                  </svg></span>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="bx--grid">
+            <div class="bx--row">
+              <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
+                <ul>
+                  <li class="heading">IBM Developer</li>
+                  <li><a href="/about/?lang=en">About</a></li>
+                  <li><a href="/feedback/">FAQ</a></li>
+                  <li><a href="/terms/third-party-notice/">Third-party notice</a></li>
+                </ul>
+              </div>
+              <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
+                <ul class="tr">
+                  <li class="heading">Follow Us</li>
+                  <li><a href="https://twitter.com/IBMDeveloper/">Twitter</a></li>
+                  <li><a href="https://www.linkedin.com/showcase/developerworks/">LinkedIn</a></li>
+                  <li><a href="https://www.facebook.com/IBMDeveloper/">Facebook</a></li>
+                  <li><a href="https://www.youtube.com/channel/UCUm6InQvGI9-6vo1teGWINA/">YouTube</a></li>
+                </ul>
+              </div>
+              <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
+                <ul>
+                  <li class="heading">Explore</li>
+                  <li><a href="/newsletters/">Newsletters</a></li>
                   <li><a href="/patterns/">Code patterns</a></li>
                   <li><a href="/apis/">APIs</a></li>
                   <li><a href="/articles/">Articles</a></li>
                   <li><a href="/tutorials/">Tutorials</a></li>
                   <li><a href="https://www.ibm.com/opensource/open-projects/">Open source projects</a></li>
                   <li><a href="/videos/">Videos</a></li>
-                  <li><a href="/events/">Events</a></li>							</ul>
-						</div>
-						<div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
-              <ul class="tr">
-								<li class="heading">Select a language</li>
-								<li><a href="//developer.ibm.com/">English</a></li>
+                  <li><a href="/events/">Events</a></li>
+                </ul>
+              </div>
+              <div class="bx--col-sm-2 bx--col-md-3 bx--col-lg-3">
+                <ul class="tr">
+                  <li class="heading">Select a language</li>
+                  <li><a href="//developer.ibm.com/">English</a></li>
                   <li><a href="/br/">Português</a></li>
-                  <li><a href="/es/">Español</a></li>							</ul>
-						</div>
-					</div>
-				</div>
+                  <li><a href="/es/">Español</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- end of default footer -->
-    
-			<div class="code_content__wrap">
+      <!-- end of default footer -->
 
-			</div>
-		</div>
-		<!-- ibm footer here -->
-		<div aria-label="IBM Global Footer" class="dw-footer" id="dw-footer">
-			<div class="code_content__wrap">
-					<div class="dw-footer-corporate-links">
-							<ul>
-									<li><a href="/community/">Community</a></li>
-                  <li><a href="//ibm.com/employment/" target="_blank" rel="noopener noreferrer">Career Opportunites</a></li>
-                  <li><a href="//www.ibm.com/privacy/us/en/" target="_blank" rel="noopener noreferrer">Privacy</a></li>
-                  <li><a href="/terms/ibm-developer-terms-of-use/">Terms of use</a></li>
-                  <li><a href="//www.ibm.com/accessibility/us/en/" target="_blank" rel="noopener noreferrer">Accessibility</a></li>									<li id="ibm-truste-cp"><a onclick="truste.eu.clickListener();return false;" href="#">Cookie preferences</a></li>
-                  <li><a href="/sitemap/">Sitemap</a></li>							</ul>
-					</div>
-					<div id="ibm-footer-locale-selector"></div>
-			</div>
-		</div>
-    <button
-          value="Site feedback"
-          id="Site-feedback-btn-id"
-          onclick="KAMPYLE_ONSITE_SDK.showForm(260)"
-          form="myform" style="position: fixed; cursor: pointer; font-weight: 300; font-size: 16px; line-height: 26px; outline: 0px; text-align: center; height: 32px; padding: 0px 16px; right: 0px; top: 150px; bottom: auto; z-index: 800; transform: rotate(-90deg); transform-origin: 100% 100%; background-color: rgb(255, 255, 255); border: 1px solid rgb(15, 98, 254); color: rgb(15, 98, 254); margin: 0px !important;">
-            Site feedback
-        </button>  </footer>
-</div>
+      <div class="code_content__wrap">
 
-<div id="notificationDrawer"></div>
-
-<style>
-	#modal-k7naq0vevup .bx--modal-container,
-  #challengeModal  .bx--modal-container{
-		max-width: 980px !important;
-		padding:0 !important;
-		height: 75% !important;
-	}
-  #challengeModal  .bx--modal-container{
-    height: 90% !important;
-    max-height: 90% !important;
-    border-color: #41a8a5;
-  }
-	#modal-k7naq0vevup .bx--modal-content,
-  #challengeModal .bx--modal-content{
-		margin-bottom: 0;
-		height: 100%;
-	}
-	#modal-k7naq0vevup .bx--modal-container iframe,
-  #challengeModal .bx--modal-container iframe{
-		height:100%;
-	}
-</style>
-
-<div id="challengeModal">
-  <div id="challengeIframeWrap">
-    <div class="challenge--modal-header">
-      <button class="challenge--modal-close" type="button" data-modal-close aria-label="close modal"  data-modal-primary-focus>
-        <svg class="challenge--modal-close__icon" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-          <title>Close Modal</title>
-          <path d="M6.32 5L10 8.68 8.68 10 5 6.32 1.32 10 0 8.68 3.68 5 0 1.32 1.32 0 5 3.68 8.68 0 10 1.32 6.32 5z" fill-rule="nonzero"/>
-        </svg>
-      </button>
-    </div>
-    <div class="challenge--modal-content">
-      <iframe id="challengeIframe" src="about:blank" frameborder="0" scrolling="no"></iframe>
+      </div>
+  </div>
+  <!-- ibm footer here -->
+  <div aria-label="IBM Global Footer" class="dw-footer" id="dw-footer">
+    <div class="code_content__wrap">
+      <div class="dw-footer-corporate-links">
+        <ul>
+          <li><a href="/community/">Community</a></li>
+          <li><a href="//ibm.com/employment/" target="_blank" rel="noopener noreferrer">Career Opportunites</a></li>
+          <li><a href="//www.ibm.com/privacy/us/en/" target="_blank" rel="noopener noreferrer">Privacy</a></li>
+          <li><a href="/terms/ibm-developer-terms-of-use/">Terms of use</a></li>
+          <li><a href="//www.ibm.com/accessibility/us/en/" target="_blank" rel="noopener noreferrer">Accessibility</a>
+          </li>
+          <li id="ibm-truste-cp"><a onclick="truste.eu.clickListener();return false;" href="#">Cookie preferences</a>
+          </li>
+          <li><a href="/sitemap/">Sitemap</a></li>
+        </ul>
+      </div>
+      <div id="ibm-footer-locale-selector"></div>
     </div>
   </div>
-</div>
+  <button value="Site feedback" id="Site-feedback-btn-id" onclick="KAMPYLE_ONSITE_SDK.showForm(260)" form="myform"
+    style="position: fixed; cursor: pointer; font-weight: 300; font-size: 16px; line-height: 26px; outline: 0px; text-align: center; height: 32px; padding: 0px 16px; right: 0px; top: 150px; bottom: auto; z-index: 800; transform: rotate(-90deg); transform-origin: 100% 100%; background-color: rgb(255, 255, 255); border: 1px solid rgb(15, 98, 254); color: rgb(15, 98, 254); margin: 0px !important;">
+    Site feedback
+  </button> </footer>
+  </div>
 
-</div><!-- #page -->
+  <div id="notificationDrawer"></div>
 
-<script defer type='text/javascript' src='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/js/navigation.js?ver=20151217' id='lucio-navigation-defer-js'></script>
-<script type='text/javascript' src='https://developer.ibm.com/site-content/plugins/page-links-to/dist/new-tab.js?ver=3.3.3' id='page-links-to-js'></script>
-<script type='text/javascript' src='https://developer.ibm.com/wp-includes/js/wp-embed.min.js?ver=5.6.7' id='wp-embed-js'></script>
-<script>
-	var $searchTrigger = document.getElementById('header-search-module'),
+  <style>
+    #modal-k7naq0vevup .bx--modal-container,
+    #challengeModal .bx--modal-container {
+      max-width: 980px !important;
+      padding: 0 !important;
+      height: 75% !important;
+    }
+
+    #challengeModal .bx--modal-container {
+      height: 90% !important;
+      max-height: 90% !important;
+      border-color: #41a8a5;
+    }
+
+    #modal-k7naq0vevup .bx--modal-content,
+    #challengeModal .bx--modal-content {
+      margin-bottom: 0;
+      height: 100%;
+    }
+
+    #modal-k7naq0vevup .bx--modal-container iframe,
+    #challengeModal .bx--modal-container iframe {
+      height: 100%;
+    }
+  </style>
+
+  <div id="challengeModal">
+    <div id="challengeIframeWrap">
+      <div class="challenge--modal-header">
+        <button class="challenge--modal-close" type="button" data-modal-close aria-label="close modal"
+          data-modal-primary-focus>
+          <svg class="challenge--modal-close__icon" width="10" height="10" viewBox="0 0 10 10"
+            xmlns="http://www.w3.org/2000/svg">
+            <title>Close Modal</title>
+            <path d="M6.32 5L10 8.68 8.68 10 5 6.32 1.32 10 0 8.68 3.68 5 0 1.32 1.32 0 5 3.68 8.68 0 10 1.32 6.32 5z"
+              fill-rule="nonzero" />
+          </svg>
+        </button>
+      </div>
+      <div class="challenge--modal-content">
+        <iframe id="challengeIframe" src="about:blank" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- #page -->
+
+  <script defer type='text/javascript'
+    src='https://developer.ibm.com/site-content/themes/ibmdeveloper-carbon/js/navigation.js?ver=20151217'
+    id='lucio-navigation-defer-js'></script>
+  <script type='text/javascript'
+    src='https://developer.ibm.com/site-content/plugins/page-links-to/dist/new-tab.js?ver=3.3.3'
+    id='page-links-to-js'></script>
+  <script type='text/javascript' src='https://developer.ibm.com/wp-includes/js/wp-embed.min.js?ver=5.6.7'
+    id='wp-embed-js'></script>
+  <script>
+    var $searchTrigger = document.getElementById('header-search-module'),
       $modalInstance = undefined,
       $developerBurger = document.getElementById('developer-burger'),
       $codeSideNav = document.getElementById('developerNavTriggersMobile'),
@@ -1006,348 +1327,349 @@ From any IBM Developer page, click on the profile icon found in the upper right 
       $announcementClose = document.getElementById('announcement_close'),
       $notificationDrawer = document.getElementById('notificationDrawer');
 
-      if($notificationDrawer != null){
-        $notificationDrawer.addEventListener('click', function(event) {
-          event.preventDefault();
-          $btn = ibmcode.getClosest(event.target, 'button');
-          if( $btn && $btn.classList.contains('bx--toast-notification__close-button') ){
-            ibmcode.getClosest($btn, 'div.bx--toast-notification').remove();
+    if ($notificationDrawer != null) {
+      $notificationDrawer.addEventListener('click', function (event) {
+        event.preventDefault();
+        $btn = ibmcode.getClosest(event.target, 'button');
+        if ($btn && $btn.classList.contains('bx--toast-notification__close-button')) {
+          ibmcode.getClosest($btn, 'div.bx--toast-notification').remove();
+        }
+      });
+    }
+
+
+    if ($announcementClose != null) {
+      $announcementClose.addEventListener('click', function (event) {
+        $elm = document.getElementById('code_announcement');
+        $elm.parentNode.removeChild($elm);
+        //document.body.classList.remove('no-fixed-menu');
+        ibmcode.setCookie('Code_Annouce_Closed', 'true', 0);
+      });
+    }
+
+    if ($searchTrigger != null) { //this can be way more efficient
+      $searchTrigger.addEventListener('click', function (event) {
+        $btn = ibmcode.getClosest(event.target, 'button');
+        if ($btn && $btn.classList.contains('GlobalSearch-module--search-button--search')) {
+          if ($searchTrigger.querySelector('input[type="text"]').value.trim() != "" && !($searchTrigger.classList.contains('GlobalSearch-module--hidden'))) {
+            $searchTrigger.querySelector('form').submit();
           }
-        });
-      }
-
-
-  if($announcementClose != null){
-    $announcementClose.addEventListener('click', function(event) {
-      $elm = document.getElementById('code_announcement');
-      $elm.parentNode.removeChild($elm);
-      //document.body.classList.remove('no-fixed-menu');
-      ibmcode.setCookie('Code_Annouce_Closed','true',0);
-    });
-  }
-
-	if($searchTrigger != null){ //this can be way more efficient
-		$searchTrigger.addEventListener('click', function(event) {
-      $btn = ibmcode.getClosest(event.target, 'button');
-      if( $btn && $btn.classList.contains('GlobalSearch-module--search-button--search') ){
-        if($searchTrigger.querySelector('input[type="text"]').value.trim() != "" && !($searchTrigger.classList.contains('GlobalSearch-module--hidden')) ){
-          $searchTrigger.querySelector('form').submit();
+          $searchTrigger.classList.remove('GlobalSearch-module--hidden');
+          $searchTrigger.querySelector('input[type="text"]').focus();
+          $searchTrigger.querySelector('.GlobalSearch-module--search-button--close').classList.remove('GlobalSearch-module--hidden');
+        } else if ($btn && $btn.classList.contains('GlobalSearch-module--search-button--close')) {
+          $searchTrigger.classList.add('GlobalSearch-module--hidden');
+          $searchTrigger.querySelector('input[type="text"]').value = "";
+          $searchTrigger.querySelector('.GlobalSearch-module--search-button--close').classList.add('GlobalSearch-module--hidden');
         }
-        $searchTrigger.classList.remove('GlobalSearch-module--hidden');
-        $searchTrigger.querySelector('input[type="text"]').focus();
-        $searchTrigger.querySelector('.GlobalSearch-module--search-button--close').classList.remove('GlobalSearch-module--hidden');
-      }else if( $btn && $btn.classList.contains('GlobalSearch-module--search-button--close') ){
-        $searchTrigger.classList.add('GlobalSearch-module--hidden');
-        $searchTrigger.querySelector('input[type="text"]').value= "";
-        $searchTrigger.querySelector('.GlobalSearch-module--search-button--close').classList.add('GlobalSearch-module--hidden');
-      }
-			// window.location.href = 'https://developer.ibm.com?s=';
-		});
-	}
-
-  if($developerBurger != null && $codeSideNavCover != null && $codeSideNav != null){
-		$developerBurger.addEventListener('click', function(event) {
-      //bx--side-nav--expanded
-      if( document.body.classList.contains('bx--side-nav--opened') ){
-        document.body.classList.remove('bx--side-nav--opened');
-      }else{
-        document.body.classList.add('bx--side-nav--opened');
-      }
-		});
-    $codeSideNavCover.addEventListener('click', function(event) {
-      //bx--side-nav--expanded
-      if( document.body.classList.contains('bx--side-nav--opened') ){
-        document.body.classList.remove('bx--side-nav--opened');
-      }else{
-        document.body.classList.add('bx--side-nav--opened');
-      }
-		});
-    $codeSideNav.addEventListener('click', function(event) {
-      //bx--side-nav--expanded
-      $letsFix = event.target.closest('.bx--side-nav__submenu');
-      if($letsFix){
-        if($letsFix.classList.contains('noclick')){
-          return;
-        }
-        if($letsFix.getAttribute("aria-expanded") === 'false'){
-          $letsFix.setAttribute("aria-expanded", "true");
-        }else{
-          $letsFix.setAttribute("aria-expanded", "false");
-        }
-      }
-		});
-	}
-
-
-	$codeLeftNav = document.getElementById('code--side-nav');
-	if($codeLeftNav != null){
-		$codeLeftNav.addEventListener('click', function(event) {
-      event.preventDefault();
-			var menuDropDown = event.target.closest('button.bx--side-nav__submenu');
-      if(menuDropDown){
-        if(menuDropDown.classList.contains('noclick')){
-          return;
-        }
-        if(menuDropDown.getAttribute("aria-expanded") === 'false'){
-          menuDropDown.setAttribute("aria-expanded", "true");
-        }else{
-          menuDropDown.setAttribute("aria-expanded", "false");
-        }
-      }
-		});
-	}
-  var openMenuItem = null;
-  var openSearch = null;
-	document.addEventListener('click', function (event) {
-    //are we clicking on a link leaving the site?
-    // if(event.target.tagName.toLowerCase() === 'a'){
-    //   var patt = new RegExp(/(?<!ibm|redhat)\.(?:com|biz|org)/g);
-    //   var res = patt.test(event.target.href);
-    //   if(res){
-    //     //we need to rewrite the url to the ibm redirect page
-    //     event.target.href = 'https://www.ibm.com/links?url=' + event.target.href;
-    //   }
-    // }
-
-    //we need a click event here to close the search if its open and there is a
-    if(openMenuItem != event.target){
-      if(openMenuItem != null){
-        openMenuItem.setAttribute("aria-expanded", "false");
-        openMenuItem = null;
-      }
-    }
-    //check to see if the last link we clicked on had a class of ".mylastaction"
-    if ( ibmcode.getClosest(event.target, 'a.mylastaction') ) {
-      var newTarg = ibmcode.getClosest(event.target, 'a.mylastaction');
-      var elmID = newTarg.getAttribute('id');
-      if(elmID != null){
-        localStorage.setItem("mylastaction", elmID);
-      }
+        // window.location.href = 'https://developer.ibm.com?s=';
+      });
     }
 
-    //did we click on a state object that we want to keep track of?
-    if( ibmcode.getClosest(event.target, '[data-csm="true"]') ){
-      var csmTarg = ibmcode.getClosest(event.target, '[data-csm="true"]');
-      var csmTargID = csmTarg.getAttribute('id');
-      if(csmTargID != null){
-        var btoaUrl = btoa(window.location.pathname);
-        if(csmTarg.dataset.clicked == undefined){
-          csmTarg.dataset.clicked = 'true';
+    if ($developerBurger != null && $codeSideNavCover != null && $codeSideNav != null) {
+      $developerBurger.addEventListener('click', function (event) {
+        //bx--side-nav--expanded
+        if (document.body.classList.contains('bx--side-nav--opened')) {
+          document.body.classList.remove('bx--side-nav--opened');
+        } else {
+          document.body.classList.add('bx--side-nav--opened');
+        }
+      });
+      $codeSideNavCover.addEventListener('click', function (event) {
+        //bx--side-nav--expanded
+        if (document.body.classList.contains('bx--side-nav--opened')) {
+          document.body.classList.remove('bx--side-nav--opened');
+        } else {
+          document.body.classList.add('bx--side-nav--opened');
+        }
+      });
+      $codeSideNav.addEventListener('click', function (event) {
+        //bx--side-nav--expanded
+        $letsFix = event.target.closest('.bx--side-nav__submenu');
+        if ($letsFix) {
+          if ($letsFix.classList.contains('noclick')) {
+            return;
+          }
+          if ($letsFix.getAttribute("aria-expanded") === 'false') {
+            $letsFix.setAttribute("aria-expanded", "true");
+          } else {
+            $letsFix.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+    }
 
-          if(sessionStorage.getItem(btoaUrl) == null){
-            //create an array to store the clicked element
-            csmTargArray = [];
-          }else{
-            //get the session storage item for use
+
+    $codeLeftNav = document.getElementById('code--side-nav');
+    if ($codeLeftNav != null) {
+      $codeLeftNav.addEventListener('click', function (event) {
+        event.preventDefault();
+        var menuDropDown = event.target.closest('button.bx--side-nav__submenu');
+        if (menuDropDown) {
+          if (menuDropDown.classList.contains('noclick')) {
+            return;
+          }
+          if (menuDropDown.getAttribute("aria-expanded") === 'false') {
+            menuDropDown.setAttribute("aria-expanded", "true");
+          } else {
+            menuDropDown.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+    }
+    var openMenuItem = null;
+    var openSearch = null;
+    document.addEventListener('click', function (event) {
+      //are we clicking on a link leaving the site?
+      // if(event.target.tagName.toLowerCase() === 'a'){
+      //   var patt = new RegExp(/(?<!ibm|redhat)\.(?:com|biz|org)/g);
+      //   var res = patt.test(event.target.href);
+      //   if(res){
+      //     //we need to rewrite the url to the ibm redirect page
+      //     event.target.href = 'https://www.ibm.com/links?url=' + event.target.href;
+      //   }
+      // }
+
+      //we need a click event here to close the search if its open and there is a
+      if (openMenuItem != event.target) {
+        if (openMenuItem != null) {
+          openMenuItem.setAttribute("aria-expanded", "false");
+          openMenuItem = null;
+        }
+      }
+      //check to see if the last link we clicked on had a class of ".mylastaction"
+      if (ibmcode.getClosest(event.target, 'a.mylastaction')) {
+        var newTarg = ibmcode.getClosest(event.target, 'a.mylastaction');
+        var elmID = newTarg.getAttribute('id');
+        if (elmID != null) {
+          localStorage.setItem("mylastaction", elmID);
+        }
+      }
+
+      //did we click on a state object that we want to keep track of?
+      if (ibmcode.getClosest(event.target, '[data-csm="true"]')) {
+        var csmTarg = ibmcode.getClosest(event.target, '[data-csm="true"]');
+        var csmTargID = csmTarg.getAttribute('id');
+        if (csmTargID != null) {
+          var btoaUrl = btoa(window.location.pathname);
+          if (csmTarg.dataset.clicked == undefined) {
+            csmTarg.dataset.clicked = 'true';
+
+            if (sessionStorage.getItem(btoaUrl) == null) {
+              //create an array to store the clicked element
+              csmTargArray = [];
+            } else {
+              //get the session storage item for use
+              csmTargArray = sessionStorage.getItem(btoaUrl);
+              csmTargArray = csmTargArray.split(",");
+            }
+            //check to make sure the value is not in the array before adding
+            if (!csmTargArray.includes(csmTargID)) {
+              csmTargArray.push(csmTargID);
+            }
+            //now store it
+            sessionStorage.setItem(btoaUrl, csmTargArray);
+          } else {
             csmTargArray = sessionStorage.getItem(btoaUrl);
             csmTargArray = csmTargArray.split(",");
+            //find the clicked element in the array and remove it
+            index = csmTargArray.indexOf(csmTargID);
+            if (index > -1) {
+              csmTargArray.splice(index, 1);
+              sessionStorage.setItem(btoaUrl, csmTargArray);
+            }
+            csmTarg.removeAttribute('data-clicked');
+          };
+          //if the array is empty, se should delete it
+          if (csmTargArray.length < 1) {
+            sessionStorage.removeItem(btoaUrl);
           }
-          //check to make sure the value is not in the array before adding
-          if(!csmTargArray.includes(csmTargID)){
-            csmTargArray.push(csmTargID);
-          }
-          //now store it
-          sessionStorage.setItem(btoaUrl, csmTargArray);
-        }else{
-          csmTargArray = sessionStorage.getItem(btoaUrl);
-          csmTargArray = csmTargArray.split(",");
-          //find the clicked element in the array and remove it
-          index = csmTargArray.indexOf(csmTargID);
-          if (index > -1) {
-            csmTargArray.splice(index, 1);
-            sessionStorage.setItem(btoaUrl, csmTargArray);
-          }
-          csmTarg.removeAttribute('data-clicked');
-        };
-        //if the array is empty, se should delete it
-        if(csmTargArray.length < 1){
-          sessionStorage.removeItem(btoaUrl);
+        }
+      }
+
+      // console.info(event);
+      if (event.target.classList.contains('bx--snippet__icon')) {
+        // Get the parent with the `.accordion` class
+        var parentBtn = ibmcode.getClosest(event.target, '.bx--snippet-button');
+        var codeBlock = parentBtn.previousElementSibling.querySelectorAll('code');
+        if (codeBlock[0]) {
+          ibmcode.copyText(codeBlock[0]);
+        }
+      }
+      if (ibmcode.getClosest(event.target, '.bx--header__menu-title')) {
+        event.preventDefault();
+        var newTarg = ibmcode.getClosest(event.target, '.bx--header__menu-title');
+        if (newTarg === openMenuItem && openMenuItem != null) {
+          openMenuItem.setAttribute("aria-expanded", "false");
+          openMenuItem = null;
+          return
+        }
+        openMenuItem = newTarg;
+        openMenuItem.setAttribute("aria-expanded", "true");
+      }
+
+      if (ibmcode.getClosest(event.target, '.GlobalLogin-module--container')) {
+        if (event.target.className === 'bx--header__menu-item') {
+          return;
+        }
+        event.preventDefault();
+        var newTarg = ibmcode.getClosest(event.target, '.GlobalLogin-module--container');
+        if (newTarg === openMenuItem && openMenuItem != null) {
+          openMenuItem.setAttribute("aria-expanded", "false");
+          openMenuItem = null;
+          return;
+        }
+        openMenuItem = newTarg;
+        openMenuItem.setAttribute("aria-expanded", "true");
+      }
+
+
+
+      if (event.target.id === "challengeModal" || event.target.classList.contains('challenge--modal-close') || event.target.closest('.challenge--modal-close')) {
+        toggleChallengeModal('', true);
+        return;
+      }
+      //we clicked on a challenge and we need to trigger the modal for taking it
+      if (event.target.closest('.developer--card.ibmcode_challenges.loggedin')) {
+        event.preventDefault();
+        $challengeURL = event.target.closest('.developer--card.ibmcode_challenges.loggedin').querySelector('.developer--card__block_link').href;
+        toggleChallengeModal($challengeURL);
+      }
+      //we clicked on a card that wants to display in a modal
+      if (event.target.closest('.developer--card.modal')) {
+        event.preventDefault();
+        console.info(event.target);
+        $challengeURL = event.target.closest('.developer--card.modal').querySelector('.developer--card__block_link').href;
+        toggleChallengeModal($challengeURL);
+      }
+    }, false);
+
+
+    function set_size($size) {
+      document.querySelector('#challengeIframeWrap .challenge--modal-content').style.height = $size;
+    }
+
+    function toggleChallengeModal($challengeURL, $close, $completedChallenge) {
+      if ($close === true) {
+        document.body.classList.remove("showing-modal");
+        $iFrame = document.getElementById('challengeIframe');
+        $iFrame.src = 'about:blank';
+      } else {
+        $challengeModal = document.getElementById('challengeModal');
+        $iFrame = document.getElementById('challengeIframe');
+        // $iFrameHeight = $iFrame.contentWindow.document.body.offsetHeight;
+        $iFrame.src = $challengeURL;
+        document.body.classList.add("showing-modal");
+      }
+      if (typeof ($completedChallenge) === "string") {
+        var completedChallengeCards = document.querySelectorAll('a[href="/challenges/' + $completedChallenge + '/"]');
+        for (var i = 0; i < completedChallengeCards.length; i++) {
+          completedChallengeCards[i].parentNode.classList.add('completed');
         }
       }
     }
 
-    // console.info(event);
-		if ( event.target.classList.contains('bx--snippet__icon') ) {
-			// Get the parent with the `.accordion` class
-			var parentBtn = ibmcode.getClosest(event.target, '.bx--snippet-button');
-			var codeBlock = parentBtn.previousElementSibling.querySelectorAll('code');
-			if(codeBlock[0]){
-				ibmcode.copyText(codeBlock[0]);
-			}
-		}
-    if ( ibmcode.getClosest(event.target, '.bx--header__menu-title') ) {
-      event.preventDefault();
-      var newTarg = ibmcode.getClosest(event.target, '.bx--header__menu-title');
-      if(newTarg === openMenuItem && openMenuItem != null){
-        openMenuItem.setAttribute("aria-expanded", "false");
-        openMenuItem = null;
-        return
+
+    var domReadyCallback = function () {
+      //get cookie for the last recordable action
+      // var lastAction = ibmcode.getCookie('mylastaction');
+      var lastAction = localStorage.getItem('mylastaction');
+      localStorage.removeItem('mylastaction');
+      // console.info(lastAction);
+      // ibmcode.eraseCookie('mylastaction'); //now clear the action
+      if (lastAction != null) {
+        var targElm = document.getElementById(lastAction);
+        console.info(targElm);
+        targElm.classList.remove("mylastaction");
+        setTimeout(function () { targElm.click(); }, 750);
       }
-      openMenuItem = newTarg;
-      openMenuItem.setAttribute("aria-expanded", "true");
-    }
 
-    if ( ibmcode.getClosest(event.target, '.GlobalLogin-module--container') ) {
-      if(event.target.className === 'bx--header__menu-item'){
-        return;
+      //look at the session state elements for the current page and trigger them.
+      var btoaUrl = btoa(window.location.pathname);
+      var pageState = sessionStorage.getItem(btoaUrl);
+      if (pageState != null) {
+        pageState = pageState.split(",");
+        pageState.forEach(function (entry) {
+          var targElm = document.getElementById(entry);
+          setTimeout(function () {
+            targElm.click();
+            targElm.dataset.clicked = 'true';
+          }, 750);
+        });
+        // var targElm = document.getElementById(pageState);
+        // setTimeout(function(){ targElm.click(); }, 750);
       }
-      event.preventDefault();
-      var newTarg = ibmcode.getClosest(event.target, '.GlobalLogin-module--container');
-      if(newTarg === openMenuItem && openMenuItem != null){
-        openMenuItem.setAttribute("aria-expanded", "false");
-        openMenuItem = null;
-        return;
-      }
-      openMenuItem = newTarg;
-      openMenuItem.setAttribute("aria-expanded", "true");
-    }
 
 
-
-    if(event.target.id === "challengeModal" || event.target.classList.contains('challenge--modal-close') || event.target.closest('.challenge--modal-close')){
-      toggleChallengeModal('',true);
-      return;
-    }
-    //we clicked on a challenge and we need to trigger the modal for taking it
-    if ( event.target.closest('.developer--card.ibmcode_challenges.loggedin') ) {
-      event.preventDefault();
-      $challengeURL = event.target.closest('.developer--card.ibmcode_challenges.loggedin').querySelector('.developer--card__block_link').href;
-      toggleChallengeModal($challengeURL);
-		}
-    //we clicked on a card that wants to display in a modal
-    if ( event.target.closest('.developer--card.modal') ) {
-      event.preventDefault();
-      console.info(event.target);
-      $challengeURL = event.target.closest('.developer--card.modal').querySelector('.developer--card__block_link').href;
-      toggleChallengeModal($challengeURL);
-		}
-	}, false);
-
-
-  function set_size($size){
-    document.querySelector('#challengeIframeWrap .challenge--modal-content').style.height = $size;
-  }
-
-  function toggleChallengeModal($challengeURL,$close,$completedChallenge){
-    if($close === true){
-      document.body.classList.remove("showing-modal");
-      $iFrame = document.getElementById('challengeIframe');
-      $iFrame.src = 'about:blank';
-    }else{
-      $challengeModal = document.getElementById('challengeModal');
-      $iFrame = document.getElementById('challengeIframe');
-      // $iFrameHeight = $iFrame.contentWindow.document.body.offsetHeight;
-      $iFrame.src = $challengeURL;
-      document.body.classList.add("showing-modal");
-    }
-    if(typeof($completedChallenge) === "string"){
-      var completedChallengeCards = document.querySelectorAll('a[href="/challenges/'+$completedChallenge+'/"]');
-      for (var i = 0; i < completedChallengeCards.length; i++) {
-        completedChallengeCards[i].parentNode.classList.add('completed');
-      }
-    }
-  }
-
-
-  var domReadyCallback = function(){
-    //get cookie for the last recordable action
-    // var lastAction = ibmcode.getCookie('mylastaction');
-    var lastAction = localStorage.getItem('mylastaction');
-    localStorage.removeItem('mylastaction');
-    // console.info(lastAction);
-    // ibmcode.eraseCookie('mylastaction'); //now clear the action
-    if(lastAction != null){
-      var targElm = document.getElementById(lastAction);
-      console.info(targElm);
-      targElm.classList.remove("mylastaction");
-      setTimeout(function(){ targElm.click(); }, 750);
-    }
-
-    //look at the session state elements for the current page and trigger them.
-    var btoaUrl = btoa(window.location.pathname);
-    var pageState = sessionStorage.getItem(btoaUrl);
-    if(pageState != null){
-      pageState = pageState.split(",");
-      pageState.forEach(function(entry) {
-        var targElm = document.getElementById(entry);
-        setTimeout(function(){
-          targElm.click();
-          targElm.dataset.clicked = 'true';
-        }, 750);
-      });
-      // var targElm = document.getElementById(pageState);
-      // setTimeout(function(){ targElm.click(); }, 750);
-    }
-
-
-    // Handler when the DOM is fully loaded
-    //handling the loazy load
-    var lazyloadCardImages,
+      // Handler when the DOM is fully loaded
+      //handling the loazy load
+      var lazyloadCardImages,
         lazyloadContentImages;
 
-    if ("IntersectionObserver" in window) {
-      //this will handle the card background images styled by css
-      lazyloadCardImages = document.querySelectorAll(".lazycards");
-      var imageCardObserver = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var image = entry.target;
-            image.classList.remove("lazycards");
-            imageCardObserver.unobserve(image);
-          }
+      if ("IntersectionObserver" in window) {
+        //this will handle the card background images styled by css
+        lazyloadCardImages = document.querySelectorAll(".lazycards");
+        var imageCardObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var image = entry.target;
+              image.classList.remove("lazycards");
+              imageCardObserver.unobserve(image);
+            }
+          });
         });
-      });
-      lazyloadCardImages.forEach(function(image) {
-        imageCardObserver.observe(image);
-      });
-      //this will handle the images used in the body of our content types
-      lazyloadContentImages = document.querySelectorAll(".lazycontent");
-      var imageContentObserver = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var image = entry.target;
-            image.src = image.dataset.src;
-            image.classList.remove("lazycontent");
-            imageContentObserver.unobserve(image);
-          }
+        lazyloadCardImages.forEach(function (image) {
+          imageCardObserver.observe(image);
         });
+        //this will handle the images used in the body of our content types
+        lazyloadContentImages = document.querySelectorAll(".lazycontent");
+        var imageContentObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var image = entry.target;
+              image.src = image.dataset.src;
+              image.classList.remove("lazycontent");
+              imageContentObserver.unobserve(image);
+            }
+          });
+        });
+
+        lazyloadContentImages.forEach(function (image) {
+          imageContentObserver.observe(image);
+        });
+      }
+
+      //function that runs to set the same height of card elements
+
+      setTimeout(function () {
+        $sameHeightWidgets = document.querySelectorAll('[data-widget="setsameheight"]');
+        ibmcode.widgetSetSameHeight($sameHeightWidgets, true);
+      }, 250);
+      var resizeTimer;
+      ibmcode.addEvent(window, 'resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          ibmcode.widgetSetSameHeight($sameHeightWidgets, true);
+        }, 250);
       });
 
-      lazyloadContentImages.forEach(function(image) {
-        imageContentObserver.observe(image);
-      });
+
+      //this javascript needs to get added to the page only when a user is logged in and auth is true
+
+    };
+
+    if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+      domReadyCallback();
+    } else {
+      document.addEventListener("DOMContentLoaded", domReadyCallback);
     }
 
-    //function that runs to set the same height of card elements
 
-    setTimeout(function() {
-      $sameHeightWidgets = document.querySelectorAll('[data-widget="setsameheight"]');
-      ibmcode.widgetSetSameHeight($sameHeightWidgets,true);
-    }, 250);
-    var resizeTimer;
-    ibmcode.addEvent(window,'resize',function(){
-      clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-          ibmcode.widgetSetSameHeight($sameHeightWidgets,true);
-        }, 250);
-    });
-
-
-    //this javascript needs to get added to the page only when a user is logged in and auth is true
-
-  };
-
-  if ( document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll) ) {
-    domReadyCallback();
-  } else {
-    document.addEventListener("DOMContentLoaded", domReadyCallback);
-  }
-
-
-  /* adding functions to handle sending in favoriting */
+    /* adding functions to handle sending in favoriting */
   // ibmcode.postAjax = function(url, data, callback)
 
-</script>
+  </script>
 
 </body>
+
 </html>
