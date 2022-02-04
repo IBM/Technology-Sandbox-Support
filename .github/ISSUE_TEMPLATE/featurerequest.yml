@@ -1,5 +1,5 @@
-name: Question
-description: Usage question or discussion about IBM Developer Technology Sandbox. 
+name: Feature Request
+description: Suggest an idea for this project. [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
 body:
   - type: markdown
     attributes:
@@ -13,18 +13,10 @@ body:
       placeholder: ex. email@example.com
     validations:
       required: true
-  - type: input
-    id: asset-name
-    attributes:
-      label: Asset Name
-      description: Is question related to any particular asset? If so, please provide the Asset name or link
-      placeholder: ex. Agro Smart assistant
-    validations:
-      required: false
   - type: textarea
     id: question-area
     attributes:
-      label: Post your question here
+      label: A clear and concise description of what you want to happen.
       description: To make it easier for us to help you, please include as much useful information as possible.
     validations:
       required: true
