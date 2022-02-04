@@ -1,6 +1,6 @@
 ---
 name: "Bug report \U0001F41E"
-about: Create a report to help us improve
+about: Create a report to help us improve. If you have additional questions, please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
 title: ''
 labels: ''
 assignees: ''
