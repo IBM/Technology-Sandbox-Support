@@ -1,10 +1,10 @@
 name: Feedback
-description: Your feedback is highly appreciated and will help us to improve our ability to serve you and other users of our application. If you have additional questions, please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
+description: Your feedback is highly appreciated and will help us to improve our ability to serve you and other users of our application. If you have additional questions, please check out the 
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to provide the feedback!
+        Thanks for taking the time to provide the feedback! [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
   - type: input
     id: contact
     attributes:

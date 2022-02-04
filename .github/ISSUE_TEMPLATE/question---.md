@@ -6,7 +6,7 @@ labels: ''
 assignees: ''
 
 ---
-If you have additional questions, please check out the [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
+If you have additional questions, please check out the 
 **Asking a new Question 🤔**
 🔍 Before opening a new issue please search existing issues at https://github.com/IBM/Developer-Playground-Support/issues
 
