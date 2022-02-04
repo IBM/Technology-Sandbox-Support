@@ -1164,119 +1164,28 @@
       }
     }, false);
 
-
-    function set_size($size) {
-      document.querySelector('#challengeIframeWrap .challenge--modal-content').style.height = $size;
-    }
-
-    function toggleChallengeModal($challengeURL, $close, $completedChallenge) {
-      if ($close === true) {
-        document.body.classList.remove("showing-modal");
-        $iFrame = document.getElementById('challengeIframe');
-        $iFrame.src = 'about:blank';
-      } else {
-        $challengeModal = document.getElementById('challengeModal');
-        $iFrame = document.getElementById('challengeIframe');
-        // $iFrameHeight = $iFrame.contentWindow.document.body.offsetHeight;
-        $iFrame.src = $challengeURL;
-        document.body.classList.add("showing-modal");
-      }
-      if (typeof ($completedChallenge) === "string") {
-        var completedChallengeCards = document.querySelectorAll('a[href="/challenges/' + $completedChallenge + '/"]');
-        for (var i = 0; i < completedChallengeCards.length; i++) {
-          completedChallengeCards[i].parentNode.classList.add('completed');
-        }
-      }
-    }
+    // function toggleChallengeModal($challengeURL, $close, $completedChallenge) {
+    //   if ($close === true) {
+    //     document.body.classList.remove("showing-modal");
+    //     $iFrame = document.getElementById('challengeIframe');
+    //     $iFrame.src = 'about:blank';
+    //   } else {
+    //     $challengeModal = document.getElementById('challengeModal');
+    //     $iFrame = document.getElementById('challengeIframe');
+    //     // $iFrameHeight = $iFrame.contentWindow.document.body.offsetHeight;
+    //     $iFrame.src = $challengeURL;
+    //     document.body.classList.add("showing-modal");
+    //   }
+    //   if (typeof ($completedChallenge) === "string") {
+    //     var completedChallengeCards = document.querySelectorAll('a[href="/challenges/' + $completedChallenge + '/"]');
+    //     for (var i = 0; i < completedChallengeCards.length; i++) {
+    //       completedChallengeCards[i].parentNode.classList.add('completed');
+    //     }
+    //   }
+    // }
 
 
-    var domReadyCallback = function () {
-      //get cookie for the last recordable action
-      // var lastAction = ibmcode.getCookie('mylastaction');
-      var lastAction = localStorage.getItem('mylastaction');
-      localStorage.removeItem('mylastaction');
-      // console.info(lastAction);
-      // ibmcode.eraseCookie('mylastaction'); //now clear the action
-      if (lastAction != null) {
-        var targElm = document.getElementById(lastAction);
-        console.info(targElm);
-        targElm.classList.remove("mylastaction");
-        setTimeout(function () { targElm.click(); }, 750);
-      }
 
-      //look at the session state elements for the current page and trigger them.
-      var btoaUrl = btoa(window.location.pathname);
-      var pageState = sessionStorage.getItem(btoaUrl);
-      if (pageState != null) {
-        pageState = pageState.split(",");
-        pageState.forEach(function (entry) {
-          var targElm = document.getElementById(entry);
-          setTimeout(function () {
-            targElm.click();
-            targElm.dataset.clicked = 'true';
-          }, 750);
-        });
-        // var targElm = document.getElementById(pageState);
-        // setTimeout(function(){ targElm.click(); }, 750);
-      }
-
-
-      // Handler when the DOM is fully loaded
-      //handling the loazy load
-      var lazyloadCardImages,
-        lazyloadContentImages;
-
-      if ("IntersectionObserver" in window) {
-        //this will handle the card background images styled by css
-        lazyloadCardImages = document.querySelectorAll(".lazycards");
-        var imageCardObserver = new IntersectionObserver(function (entries, observer) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              var image = entry.target;
-              image.classList.remove("lazycards");
-              imageCardObserver.unobserve(image);
-            }
-          });
-        });
-        lazyloadCardImages.forEach(function (image) {
-          imageCardObserver.observe(image);
-        });
-        //this will handle the images used in the body of our content types
-        lazyloadContentImages = document.querySelectorAll(".lazycontent");
-        var imageContentObserver = new IntersectionObserver(function (entries, observer) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              var image = entry.target;
-              image.src = image.dataset.src;
-              image.classList.remove("lazycontent");
-              imageContentObserver.unobserve(image);
-            }
-          });
-        });
-
-        lazyloadContentImages.forEach(function (image) {
-          imageContentObserver.observe(image);
-        });
-      }
-
-      //function that runs to set the same height of card elements
-
-      setTimeout(function () {
-        $sameHeightWidgets = document.querySelectorAll('[data-widget="setsameheight"]');
-        ibmcode.widgetSetSameHeight($sameHeightWidgets, true);
-      }, 250);
-      var resizeTimer;
-      ibmcode.addEvent(window, 'resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          ibmcode.widgetSetSameHeight($sameHeightWidgets, true);
-        }, 250);
-      });
-
-
-      //this javascript needs to get added to the page only when a user is logged in and auth is true
-
-    };
 
     if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
       domReadyCallback();
