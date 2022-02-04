@@ -1,4 +1,4 @@
-name: Questions \U0001F914
+name: Question
 description: Usage question or discussion about IBM Developer Technology Sandbox. 
 body:
   - type: markdown
