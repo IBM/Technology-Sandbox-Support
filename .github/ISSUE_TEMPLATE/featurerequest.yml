@@ -1,5 +1,5 @@
 name: Feature Request
-description: Suggest an idea for this project. [FAQ's](https://ibm.github.io/Technology-Sandbox-Support/)!
+description: Suggest an idea for this project.
 body:
   - type: markdown
     attributes:
