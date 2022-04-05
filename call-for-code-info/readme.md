@@ -1,4 +1,4 @@
-![Call for Code logo](images/call-for-code-logo-1.png)
+![Call for Code logo](images/call-for-code-1.png)
 
 The IBM Developer Technology Sandbox is a lightweight, browser-based experience that allows users to try technologies through prebuilt applications.  
 
