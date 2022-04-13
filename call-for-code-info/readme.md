@@ -8,7 +8,7 @@ The IBM Developer Technology Sandbox is a lightweight, browser-based experience 
 Use the following prebuilt applications to learn how to use IBM Watson Services, IBM Research APIs, HERE APIs, and The Weather Company APIs in your Call for Code project.  
 
 
-Launching an application creates a temporary workspace that includes an IDE plug-in, a code editor window, and an interactive README file to build and execute the application. After executing the application, you are able to modify it, save it to your GitHub repo, and use it as a starting point for your Call for Code project. Preview the Technology Sandbox with this [quick tour](https://sandbox.run.developer.ibm.com/fonts/IBM%20Developer%20Technology%20Sandbox%20Quicktour.pdf).  
+Launching an application creates a temporary workspace that includes an IDE plug-in, a code editor window, and an interactive README file to build and execute the application. After executing the application, you are able to modify it, save it to your GitHub repo, and use it as a starting point for your Call for Code project. See the application's README file for instructions on how to run the application locally on your workstation or how to deploy it to IBM Cloud Kubernetes Services. Preview the Technology Sandbox with this [quick tour](https://sandbox.run.developer.ibm.com/fonts/IBM%20Developer%20Technology%20Sandbox%20Quicktour.pdf).  
 
 
 To launch any of the following applications, you need a browser other than Safari and an IBM account ([Create an IBM account for free](https://www.ibm.com/account/reg/us-en/signup?formid=urx-30292)).
