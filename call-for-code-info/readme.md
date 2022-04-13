@@ -17,7 +17,7 @@ To launch any of the following applications, you need a browser other than Safar
 **[Video Analysis](https://sandbox.run.developer.ibm.com/#/cpext/video-analysis)**
 
 Extract meaningful insights from data using Watson Speech to Text and Natural Language Processing.  
-To run this application, you need an IBM Cloud account.Participants registered for the 2022 Call for Code Global Challenge will receive instructions to set up a trial IBM Cloud account for 2022 that provides access to many free services without a credit card, including the ability to create Kubernetes clusters. To register for the Challenge, visit https://callforcode.bemyapp.com.
+To run this application, you need an IBM Cloud account. Participants registered for the 2022 Call for Code Global Challenge will receive instructions to set up a trial IBM Cloud account for 2022 that provides access to many free services without a credit card, including the ability to create Kubernetes clusters. To register for the Challenge, visit [https://callforcode.bemyapp.com](https://callforcode.bemyapp.com).
 
 
 **[Agro Smart Assistant](https://sandbox.run.developer.ibm.com/#/paext/agro-smart-assistant)**
