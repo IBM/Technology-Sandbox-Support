@@ -41,14 +41,14 @@ Explore weather and travel logistics with The Weather Company Data APIs and HERE
 To run this application, you need the following:
 
 * The Weather Company Data trial subscription  -- link to CFC specific instructions to come
-* Free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
+* Free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and an API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
 
 **[Geocoding and Search](https://sandbox.run.developer.ibm.com/#/apiext/heremaps--geocoding-and-search-api-v7)**
 
 Create location-enabled applications with the HERE Geocoding and Search APIs.
-To run this application, you need a free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
+To run this application, you need a free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and an API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
 
 **[Public Transit Options](https://sandbox.run.developer.ibm.com/#/apiext/heremaps--here-public-transit-api)**
 
-Discover public transit options with HERE Public Transit API.
-To run this application, you need the a free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
+Discover public transit options with the HERE Public Transit API.
+To run this application, you need a free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and an API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
