@@ -23,7 +23,7 @@ To run this application, you need an IBM Cloud account. Participants registered 
 **[Agro Smart Assistant](https://sandbox.run.developer.ibm.com/#/paext/agro-smart-assistant)**
 
 Use machine learning in a virtual assistant to get crop recommendations.  
-To run this application, you need an IBM Cloud account. Participants registered for the 2022 Call for Code Global Challenge will receive instructions to set up a trial IBM Cloud account for 2022 that provides access to many free services without a credit card, including the ability to create Kubernetes clusters. To register for the Challenge, visit https://callforcode.bemyapp.com. 
+To run this application, you need an IBM Cloud account. Participants registered for the 2022 Call for Code Global Challenge will receive instructions to set up a trial IBM Cloud account for 2022 that provides access to many free services without a credit card, including the ability to create Kubernetes clusters. To register for the Challenge, visit [https://callforcode.bemyapp.com](https://callforcode.bemyapp.com). 
 
 **[Anomaly Detection](https://sandbox.run.developer.ibm.com/#/apiext/ai4industry--anomaly-detection-product)**
 
