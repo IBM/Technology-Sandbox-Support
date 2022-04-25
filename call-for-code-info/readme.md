@@ -40,7 +40,7 @@ To run this application, you need a [Data Quality for AI API subscription](https
 Explore weather and travel logistics with The Weather Company Data APIs and HERE's APIs.
 To run this application, you need the following:
 
-* The Weather Company Data API.  Request an API key from The Weather Company [here]( https://developer.ibm.com/callforcode/tools/weather/)
+* The Weather Company Data API.  [Request an API key](https://developer.ibm.com/callforcode/tools/weather/) from The Weather Company.
 * Free [Here Developer account](https://developer.here.com/?create=Freemium-Basic) and an API key that you can generate through [HERE Access manager](https://platform.here.com/admin/apps?action=new-registration).  
 
 **[Geocoding and Search](https://sandbox.run.developer.ibm.com/#/apiext/heremaps--geocoding-and-search-api-v7)**
